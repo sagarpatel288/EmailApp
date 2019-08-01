@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/view_space_8"
+        android:paddingLeft="@dimen/view_space_8"
+        android:paddingEnd="@dimen/view_space_8"
+        android:paddingRight="@dimen/view_space_8">
+
+        <View
+            android:id="@+id/vd_top"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_divider"
+            android:background="@color/colorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+        </View>
+
+        <TextView
+            android:id="@+id/ctv_top_time_heading"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingTop="@dimen/view_space_8"
+            android:paddingBottom="@dimen/view_space_8"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vd_top"
+            tools:text="@string/placeholder" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ"
+            android:layout_width="@dimen/size_image_email_listing"
+            android:layout_height="@dimen/size_image_email_listing"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_top_time_heading"
+            app:srcCompat="@drawable/dr_circle_grey"></de.hdodenhof.circleimageview.CircleImageView>
+
+        <TextView
+            android:id="@+id/ctv_civ_letter"
+            style="@style/TextAppearance.MaterialComponents.Overline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            app:layout_constraintBottom_toBottomOf="@id/civ"
+            app:layout_constraintEnd_toEndOf="@+id/civ"
+            app:layout_constraintLeft_toLeftOf="@id/civ"
+            app:layout_constraintRight_toRightOf="@id/civ"
+            app:layout_constraintStart_toStartOf="@+id/civ"
+            app:layout_constraintTop_toTopOf="@id/civ"
+            tools:text="A" />
+
+        <TextView
+            android:id="@+id/ctv_email_title"
+            style="@style/TextAppearance.MaterialComponents.Body1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/view_space_8"
+            android:layout_marginLeft="@dimen/view_space_8"
+            android:layout_marginEnd="@dimen/view_space_8"
+            android:layout_marginRight="@dimen/view_space_8"
+            android:clickable="true"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:maxLines="1"
+            app:layout_constraintEnd_toStartOf="@+id/ctv_time"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toRightOf="@id/civ"
+            app:layout_constraintRight_toLeftOf="@+id/ctv_time"
+            app:layout_constraintStart_toEndOf="@id/civ"
+            app:layout_constraintTop_toTopOf="@id/civ"
+            tools:text="@string/placeholder" />
+
+        <TextView
+            android:id="@+id/ctv_email_sub_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/ctv_time"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="@id/ctv_email_title"
+            app:layout_constraintRight_toLeftOf="@+id/ctv_time"
+            app:layout_constraintStart_toStartOf="@+id/ctv_email_title"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_email_title"
+            tools:text="@string/placeholder" />
+
+        <TextView
+            android:id="@+id/ctv_email_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0"
+            app:layout_constraintLeft_toLeftOf="@id/ctv_email_sub_title"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ctv_email_sub_title"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_email_sub_title"
+            tools:text="@string/placeholder" />
+
+        <TextView
+            android:id="@+id/ctv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ctv_email_title"
+            tools:text="@string/placeholder" />
+
+        <View
+            android:id="@+id/vd_bottom"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/size_divider"
+            android:layout_marginTop="@dimen/view_space_10"
+            android:background="@color/colorDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_email_detail"></View>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

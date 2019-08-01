@@ -1,0 +1,14 @@
+{
+  "client_id": "5f620588-8746-4c7d-8bfd-ea5331a4b1d2",
+  "authorization_user_agent": "DEFAULT",
+  "redirect_uri": "msauth://com.example.android.emailapp/2jmj7l5rSw0yVb%2FvlWAYkK%2FYBwk%3D",
+  "authorities": [
+    {
+      "type": "AAD",
+      "audience": {
+        "type": "AzureADandPersonalMicrosoftAccount",
+        "tenant_id": "common"
+      }
+    }
+  ]
+}

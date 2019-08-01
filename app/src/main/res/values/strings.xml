@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">EmailApp</string>
+    <string name="label_outlook_email">Outlook Email</string>
+    <string name="label_enter_password">Enter Password</string>
+    <string name="label_submit">Submit</string>
+    <string name="error_invalid_email">Invalid email</string>
+</resources>

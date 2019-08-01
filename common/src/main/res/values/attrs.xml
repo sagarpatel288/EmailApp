@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CustomTextView">
+        <attr name="ctvTextColor" format="color" />
+        <attr name="ctvPressedColor" format="color" />
+        <attr name="ctvRippleColor" format="color" />
+        <attr name="ctvHasAlphaPressedColor" format="boolean" />
+        <attr name="ctvGradientCornerRadius" format="float" />
+        <attr name="ctvGradientOrientation" format="enum" />
+        <attr name="ctvGradientStartColor" format="color" />
+        <attr name="ctvGradientCenterColor" format="color" />
+        <attr name="ctvGradientEndColor" format="color" />
+        <attr name="ctvCornerRadius" format="float" />
+        <attr name="ctvRightBottomRadius" format="float" />
+        <attr name="ctvLeftBottomRadius" format="float" />
+        <attr name="ctvLeftTopRadius" format="float" />
+        <attr name="ctvRightTopRadius" format="float" />
+        <attr name="ctvHasGradientCustomization" format="boolean" />
+        <attr name="charSpacing" format="float" />
+    </declare-styleable>
+</resources>

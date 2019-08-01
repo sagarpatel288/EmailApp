@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        android:paddingTop="@dimen/view_space_10"
+        android:paddingBottom="@dimen/view_space_10">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/view_space_12"
+            android:paddingBottom="@dimen/view_space_12">
+
+            <TextView
+                android:id="@+id/tv_to_recepient"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/view_space_12"
+                android:layout_marginLeft="@dimen/view_space_12"
+                android:layout_marginEnd="@dimen/view_space_12"
+                android:layout_marginRight="@dimen/view_space_12"
+                android:paddingTop="@dimen/view_space_12"
+                android:paddingBottom="@dimen/view_space_12"
+                android:text="To"
+                android:textSize="14sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_to_recepient"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_to_recepient"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_to_recepient"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_to_recepient"
+                app:layout_constraintTop_toTopOf="@+id/tv_to_recepient" />
+
+            <View
+                android:id="@+id/vd_below_to_recepient"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_divider"
+                android:layout_marginTop="@dimen/view_space_12"
+                android:background="@color/colorDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_to_recepient" />
+
+            <TextView
+                android:id="@+id/tv_cc_bcc"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/view_space_12"
+                android:paddingBottom="@dimen/view_space_12"
+                android:text="CC / Bcc"
+                app:layout_constraintLeft_toLeftOf="@id/tv_to_recepient"
+                app:layout_constraintStart_toStartOf="@+id/tv_to_recepient"
+                app:layout_constraintTop_toBottomOf="@+id/vd_below_to_recepient" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_cc_bcc"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:paddingTop="@dimen/view_space_12"
+                android:paddingBottom="@dimen/view_space_12"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_cc_bcc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_cc_bcc"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_cc_bcc"
+                app:layout_constraintTop_toTopOf="@+id/tv_cc_bcc" />
+
+            <View
+                android:id="@+id/vd_below_cc_bcc"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_divider"
+                android:background="@color/colorDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_cc_bcc" />
+
+            <TextView
+                android:id="@+id/tv_subject"
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/view_space_12"
+                android:paddingBottom="@dimen/view_space_12"
+                android:text="Subject"
+                app:layout_constraintLeft_toLeftOf="@id/tv_to_recepient"
+                app:layout_constraintStart_toStartOf="@+id/tv_to_recepient"
+                app:layout_constraintTop_toBottomOf="@+id/vd_below_cc_bcc" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_subject"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:paddingTop="@dimen/view_space_12"
+                android:paddingBottom="@dimen/view_space_12"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_subject"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tv_subject"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_subject"
+                app:layout_constraintTop_toTopOf="@+id/tv_subject" />
+
+            <View
+                android:id="@+id/vd_below_subject"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/size_divider"
+                android:background="@color/colorDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_subject" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/et_description_body"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTransparent"
+                android:minLines="10"
+                android:paddingTop="@dimen/view_space_12"
+                android:paddingBottom="@dimen/view_space_12"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vd_below_subject" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/mbtn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:minWidth="90dp"
+                android:paddingTop="@dimen/view_space_12"
+                android:paddingBottom="@dimen/view_space_12"
+                android:text="SEND"
+                android:textColor="@color/colorWhite"
+                app:cornerRadius="@dimen/view_space_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_description_body" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

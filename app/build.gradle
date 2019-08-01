@@ -1,0 +1,85 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        debug {
+            storePassword 'android'
+            keyAlias = 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('C:\\Users\\srdpatel\\.android\\debug.keystore')
+        }
+    }
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.example.android.emailapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "12g"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+    /*Note: You must configure data binding for app modules that depend on libraries that use data binding,
+    even if the app module doesn't directly use data binding.
+    Source: https://developer.android.com/topic/libraries/data-binding/start
+    */
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies { configs ->
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    google(configs)
+    utils(configs)
+    implementation project(path: ':common')
+}
+
+static void google(configs) {
+    configs.implementation 'com.google.android.gms:play-services-auth:17.0.0'
+}
+
+void utils(configs) {
+    configs.implementation "com.jakewharton:butterknife:$rootProject.ext.butterKnifeVersion"
+    configs.annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.ext.butterKnifeVersion"
+    configs.annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glide"
+    //shape of view: Get custom shape of view
+    configs.implementation "com.github.florent37:shapeofview:1.4.7"
+    //Get circular image view with custom border support
+    configs.implementation "com.mikhaellopez:circularimageview:3.2.0"
+    //Get image picker and cropper
+    configs.implementation "com.theartofdev.edmodo:android-image-cropper:2.8.0"
+    configs.implementation "com.microsoft.identity.client:msal:0.3.+"
+    configs.implementation 'com.airbnb.android:lottie:3.0.7'
+    configs.implementation 'de.hdodenhof:circleimageview:3.0.0'
+    configs.implementation('com.microsoft.services:outlook-services:2.1.0'){
+        transitive = true
+    }
+    configs.implementation('com.microsoft.aad:adal:1.14.+') {
+        exclude group: 'com.android.support'
+    }
+    configs.implementation 'com.microsoft.identity.client:msal:0.3.+'
+}
