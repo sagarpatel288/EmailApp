@@ -3,6 +3,7 @@ package com.library.android.common.utils;
 
 import android.content.Intent;
 import android.os.Parcelable;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -16,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Utils {
+
+    public static final String TAG = " :Utils: ";
 
     public static Object getType(LinkedTreeMap linkedTreeMap, Object newEmptyObject, Class classNameOfObject) {
         Gson gson = new Gson();
@@ -85,11 +88,22 @@ public final class Utils {
         return gson.toJsonTree(javaObjectString, object.getClass());
     }
 
-    public static String getJson(Object object) {
+    public static String getString(Object object) {
         if (object != null) {
             Gson gson = new Gson();
             return gson.toJson(object);
         }
         return "{}";
+    }
+
+    public static JsonObject getJsonObject(Object javaObject) {
+        Gson gson = new Gson();
+        // JSON data structure
+        JsonElement jsonElement = gson.toJsonTree(javaObject);
+        JsonObject jsonObject = (JsonObject) jsonElement;
+        // serialization to String
+        String javaObjectString = jsonObject.toString();
+        Log.d(TAG, "getJsonObject: ");
+        return jsonObject;
     }
 }

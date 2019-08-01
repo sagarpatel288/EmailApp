@@ -8,27 +8,27 @@ import com.google.gson.annotations.SerializedName;
 
 public class ToRecipient implements Parcelable {
 
-    public final static Parcelable.Creator<ToRecipient> CREATOR = new Creator<ToRecipient>() {
-
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public ToRecipient createFromParcel(Parcel in) {
-            return new ToRecipient(in);
-        }
-
-        public ToRecipient[] newArray(int size) {
-            return (new ToRecipient[size]);
-        }
-
-    };
     @SerializedName("@odata.type")
     @Expose
     private String odataType;
 
+    public static final Creator<ToRecipient> CREATOR = new Creator<ToRecipient>() {
+        @Override
+        public ToRecipient createFromParcel(Parcel source) {
+            return new ToRecipient(source);
+        }
+
+        @Override
+        public ToRecipient[] newArray(int size) {
+            return new ToRecipient[size];
+        }
+    };
+    @SerializedName("emailAddress")
+    private OutlookEmailAddress emailAddress;
+
     protected ToRecipient(Parcel in) {
-        this.odataType = ((String) in.readValue((String.class.getClassLoader())));
+        this.odataType = in.readString();
+        this.emailAddress = in.readParcelable(OutlookEmailAddress.class.getClassLoader());
     }
 
     /**
@@ -53,12 +53,22 @@ public class ToRecipient implements Parcelable {
         this.odataType = odataType;
     }
 
+    public OutlookEmailAddress getEmailAddress() {
+        return emailAddress;
+    }
+
+    public void setEmailAddress(OutlookEmailAddress emailAddress) {
+        this.emailAddress = emailAddress;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
+    @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(odataType);
+        dest.writeString(this.odataType);
+        dest.writeParcelable(this.emailAddress, flags);
     }
-
 }

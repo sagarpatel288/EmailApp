@@ -13,16 +13,17 @@ import com.example.android.emailapp.baseui.BaseActivity;
 import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityComposeBinding;
+import com.example.android.emailapp.pojos.Body;
+import com.example.android.emailapp.pojos.OutlookEmailAddress;
+import com.example.android.emailapp.pojos.OutlookMessage;
+import com.example.android.emailapp.pojos.ToRecipient;
 import com.example.android.emailapp.rest.ApiClient;
 import com.example.android.emailapp.rest.ApiInterface;
 import com.google.gson.JsonObject;
 import com.library.android.common.listeners.Callbacks;
 import com.library.android.common.utils.EditTextUtils;
+import com.library.android.common.utils.Utils;
 import com.microsoft.services.outlook.BodyType;
-import com.microsoft.services.outlook.EmailAddress;
-import com.microsoft.services.outlook.ItemBody;
-import com.microsoft.services.outlook.Message;
-import com.microsoft.services.outlook.Recipient;
 import com.squareup.okhttp.ResponseBody;
 
 import java.util.ArrayList;
@@ -36,7 +37,7 @@ public class ComposeActivity extends BaseActivity {
 
     private static final String TAG = ComposeActivity.class.getSimpleName();
     private ActivityComposeBinding mBinding;
-    private Message mMessage;
+    private OutlookMessage mMessage;
     private String accessToken = "";
 
     @Override
@@ -100,20 +101,20 @@ public class ComposeActivity extends BaseActivity {
     }
 
     private void prepareMessage(Callbacks.SimpleCallBack simpleCallBack) {
-        Message message = new Message();
+        OutlookMessage message = new OutlookMessage();
 
-        List<Recipient> recipientList = new ArrayList<>();
-        EmailAddress emailAddress = new EmailAddress();
+        List<ToRecipient> recipientList = new ArrayList<>();
+        OutlookEmailAddress emailAddress = new OutlookEmailAddress();
         emailAddress.setAddress(EditTextUtils.getString(mBinding.etToRecepient));
-        Recipient recipient = new Recipient();
+        ToRecipient recipient = new ToRecipient();
         recipient.setEmailAddress(emailAddress);
         recipientList.add(recipient);
         message.setToRecipients(recipientList);
 
         message.setSubject(EditTextUtils.getString(mBinding.etSubject));
 
-        ItemBody itemBody = new ItemBody();
-        itemBody.setContentType(BodyType.Text);
+        Body itemBody = new Body();
+        itemBody.setContentType(String.valueOf(BodyType.Text));
         itemBody.setContent(EditTextUtils.getString(mBinding.etDescriptionBody));
         message.setBody(itemBody);
 
@@ -142,15 +143,16 @@ public class ComposeActivity extends BaseActivity {
 
     private JsonObject getPostDataSendEmail() {
         JsonObject postData = new JsonObject();
-        postData.add(JsonKeys.MESSAGE, getMessage());
+        JsonObject message = Utils.getJsonObject(getMessage());
+        postData.add(JsonKeys.MESSAGE, message);
         return postData;
     }
 
-    public Message getMessage() {
+    public OutlookMessage getMessage() {
         return mMessage;
     }
 
-    public void setMessage(Message mMessage) {
+    public void setMessage(OutlookMessage mMessage) {
         this.mMessage = mMessage;
     }
 
