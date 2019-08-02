@@ -1,52 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".login.StartActivity"
-
     android:orientation="vertical"
+    tools:context=".login.StartActivity">
 
-  >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="14dp"
+        android:text="Set Up Mail"
+        android:textColor="#2c3e50"
+        android:textSize="40dp"
+        android:textStyle="bold"
 
-   <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Set Up Mail"
-    android:textStyle="bold"
-    android:textSize="40dp"
-    android:layout_margin="14dp"
-       android:textColor="#2c3e50"
-
-    />
+        />
 
     <ListView
         android:id="@+id/list_view"
-        android:layout_marginTop="24dp"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        />
+        android:layout_marginTop="24dp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        >
+        android:layout_gravity="bottom">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAlignment="center"
             android:layout_weight="1"
             android:gravity="bottom"
             android:text="© 2019 All Rights Reserved."
-            />
+            android:textAlignment="center" />
 
     </LinearLayout>
 
 
-
-
-    </LinearLayout>
+</LinearLayout>
 
