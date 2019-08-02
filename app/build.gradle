@@ -6,7 +6,7 @@ android {
             storePassword 'android'
             keyAlias = 'androiddebugkey'
             keyPassword 'android'
-            storeFile file('C:\\Users\\srdpatel\\.android\\debug.keystore')
+
         }
     }
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -75,7 +75,7 @@ void utils(configs) {
     configs.implementation "com.microsoft.identity.client:msal:0.3.+"
     configs.implementation 'com.airbnb.android:lottie:3.0.7'
     configs.implementation 'de.hdodenhof:circleimageview:3.0.0'
-    configs.implementation('com.microsoft.services:outlook-services:2.1.0'){
+    configs.implementation('com.microsoft.services:outlook-services:2.1.0') {
         transitive = true
     }
     configs.implementation('com.microsoft.aad:adal:1.14.+') {
