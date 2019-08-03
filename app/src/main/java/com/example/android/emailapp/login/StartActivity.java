@@ -35,7 +35,7 @@ public class StartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start);
+        setContentView(R.layout.activity_start_copy);
 
         List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
 
