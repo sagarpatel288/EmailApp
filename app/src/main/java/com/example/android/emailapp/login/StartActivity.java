@@ -1,7 +1,5 @@
 package com.example.android.emailapp.login;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -11,6 +9,8 @@ import com.example.android.emailapp.R;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -23,8 +23,8 @@ public class StartActivity extends AppCompatActivity {
 
 
     int[] listviewImage = new int[]{
-            R.drawable.outlook_48,
-              R.drawable.icons_gmail_48, R.drawable.icons_yahoo_48,
+            R.drawable.ic_outlook_start_page,
+              R.drawable.icons_gmail_start_page, R.drawable.icons_yahoo_start_page,
     };
 
     String[] listviewShortDescription = new String[]{
