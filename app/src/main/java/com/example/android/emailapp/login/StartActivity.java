@@ -1,10 +1,16 @@
 package com.example.android.emailapp.login;
 
+import android.app.Application;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import com.example.android.emailapp.R;
+import com.example.android.emailapp.gmail.models.AppDatabase;
+import com.raizlabs.android.dbflow.config.DatabaseConfig;
+import com.raizlabs.android.dbflow.config.FlowConfig;
+import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,7 +18,7 @@ import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class StartActivity extends AppCompatActivity {
+public class StartActivity extends AppCompatActivity  {
 
 
     // Array of strings for ListView Title
@@ -31,6 +37,10 @@ public class StartActivity extends AppCompatActivity {
             "hotmail, live and msn ", "Google mail ", "Yahoo mail",
 
     };
+
+
+    private static Resources mResources;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,5 +63,21 @@ public class StartActivity extends AppCompatActivity {
         SimpleAdapter simpleAdapter = new SimpleAdapter(getBaseContext(), aList, R.layout.listview_activity, from, to);
         ListView androidListView = (ListView) findViewById(R.id.list_view);
         androidListView.setAdapter(simpleAdapter);
+
+        //Dbflow
+        mResources = getResources();
+
+        // DBFlow init
+        FlowManager.init(new FlowConfig.Builder(this)
+                .addDatabaseConfig(
+                        new DatabaseConfig.Builder(AppDatabase.class)
+                                .build())
+                .build());
+
+    }
+
+
+    public static Resources getAppResources() {
+        return mResources;
     }
 }

@@ -26,7 +26,7 @@ android {
         enabled = true
     }
     dexOptions {
-        incremental true
+       // incremental true
         javaMaxHeapSize "12g"
     }
     compileOptions {
