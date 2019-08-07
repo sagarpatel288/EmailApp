@@ -1,10 +1,15 @@
 package com.example.android.emailapp.login;
 
+import android.app.Activity;
 import android.app.Application;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.gmail.models.AppDatabase;
@@ -39,7 +44,7 @@ public class StartActivity extends AppCompatActivity  {
     };
 
 
-    private static Resources mResources;
+  //  private static Resources mResources;
 
 
     @Override
@@ -64,7 +69,34 @@ public class StartActivity extends AppCompatActivity  {
         ListView androidListView = (ListView) findViewById(R.id.list_view);
         androidListView.setAdapter(simpleAdapter);
 
-        //Dbflow
+
+        androidListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
+
+                if (position == 0) {
+                    Intent intent = new Intent(getApplicationContext(),  com.example.android.emailapp.login.MainActivity.class );
+                    startActivity(intent);
+                    Toast.makeText(getApplicationContext(),"outlook",Toast.LENGTH_LONG).show();
+
+                }
+                else if (position == 1) {
+                   Intent intent = new Intent(getApplicationContext(), com.example.android.emailapp.gmail.activities.MainActivity.class);
+                   startActivity(intent);
+                    Toast.makeText(getApplicationContext(),"gmail",Toast.LENGTH_LONG).show();
+                }
+                else if (position == 2) {
+                //    Intent intent = new Intent(this, FriendList.class);
+                  //  startActivity(intent);
+                    Toast.makeText(getApplicationContext(),"Yahoo",Toast.LENGTH_LONG).show();
+                }
+            }
+
+        });
+
+    /*    //Dbflow
         mResources = getResources();
 
         // DBFlow init
@@ -72,12 +104,12 @@ public class StartActivity extends AppCompatActivity  {
                 .addDatabaseConfig(
                         new DatabaseConfig.Builder(AppDatabase.class)
                                 .build())
-                .build());
+                .build());*/
 
     }
 
 
-    public static Resources getAppResources() {
+   /* public static Resources getAppResources() {
         return mResources;
-    }
+    } */
 }

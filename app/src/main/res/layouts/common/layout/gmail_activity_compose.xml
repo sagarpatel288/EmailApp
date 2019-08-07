@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lytParent"
@@ -9,13 +10,13 @@
     tools:context=".gmail.activities.ComposeActivity"
     tools:targetApi="jelly_bean">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
         android:theme="@style/ToolbarTheme">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
@@ -25,7 +26,7 @@
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:title="@string/compose" />
 
-    </android.support.design.widget.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
 
 
@@ -36,18 +37,18 @@
 
 
 
-        <android.support.v7.widget.LinearLayoutCompat
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -57,7 +58,7 @@
                     android:textSize="15sp"
                     tools:targetApi="jelly_bean" />
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/txtFrom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -70,7 +71,7 @@
                     android:textSize="15sp"
                     tools:targetApi="jelly_bean" />
 
-            </android.support.v7.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
                 android:layout_width="match_parent"
@@ -80,13 +81,13 @@
 
 
 
-            <android.support.v7.widget.LinearLayoutCompat
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="16dp">
 
-                <android.support.v7.widget.AppCompatTextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -96,7 +97,7 @@
                     android:textSize="15sp"
                     tools:targetApi="jelly_bean" />
 
-                <android.support.v7.widget.AppCompatEditText
+                <androidx.appcompat.widget.AppCompatEditText
                     android:id="@+id/txtTo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -111,7 +112,7 @@
                     android:textSize="15sp"
                     tools:targetApi="jelly_bean" />
 
-            </android.support.v7.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
                 android:layout_width="match_parent"
@@ -119,7 +120,8 @@
                 android:alpha="0.1"
                 android:background="@android:color/black" />
 
-            <android.support.v7.widget.AppCompatEditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/txtSubject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -139,7 +141,8 @@
                 android:alpha="0.1"
                 android:background="@android:color/black" />
 
-            <android.support.v7.widget.AppCompatEditText
+
+            <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/txtMessage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -153,11 +156,11 @@
                 android:textSize="15sp"
                 tools:targetApi="jelly_bean" />
 
-        </android.support.v7.widget.LinearLayoutCompat>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
 
     </ScrollView>
 
 
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

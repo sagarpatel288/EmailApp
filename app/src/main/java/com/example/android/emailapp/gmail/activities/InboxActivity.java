@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
@@ -31,7 +32,9 @@ import com.example.android.emailapp.gmail.utils.EndlessRecyclerViewScrollListene
 import com.example.android.emailapp.gmail.utils.MessagesAdapter;
 import com.example.android.emailapp.gmail.utils.Utils;
 import com.google.android.gms.common.GoogleApiAvailability;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;

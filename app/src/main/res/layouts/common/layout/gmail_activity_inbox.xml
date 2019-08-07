@@ -28,7 +28,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.SwipeRefreshLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/refreshMessages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -40,17 +40,20 @@
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    </androidx.core.widget.SwipeRefreshLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabCompose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        app:srcCompat="@drawable/ic_edit_white_48dp"
         app:fabSize="normal"
         app:layout_anchor="@id/listMessages"
+        android:theme="@style/Theme.AppCompat"
+        app:backgroundTint="@color/colorPrimaryDark"
         app:layout_anchorGravity="bottom|right|end"
-        app:useCompatPadding="true" />
+        app:useCompatPadding="true"
+        app:srcCompat="@drawable/ic_edit_white_48dp"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
