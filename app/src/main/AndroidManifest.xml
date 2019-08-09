@@ -28,7 +28,9 @@
 
         <!-- Gmail -->
         <activity android:name=".gmail.activities.MainActivity"/>
-        <activity android:name=".gmail.activities.InboxActivity"/>
+        <activity android:name=".gmail.activities.InboxActivity"
+            android:theme="@style/AppTheme.Launcher"
+            />
         <activity android:name=".gmail.activities.ComposeActivity"/>
         <activity android:name=".gmail.activities.EmailActivity"/>
 

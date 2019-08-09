@@ -1,5 +1,6 @@
 package com.example.android.emailapp.gmail.utils;
 
+
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.gmail.activities.EmailActivity;
+import com.example.android.emailapp.gmail.activities.InboxActivity;
 import com.example.android.emailapp.gmail.models.Message;
 
 import java.util.ArrayList;
@@ -40,6 +43,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         public MessageViewHolder(View itemView) {
             super(itemView);
 
+
+     //  mContext = itemView.getContext();
+
             lytItemParent = itemView.findViewById(R.id.lytItemParent);
             lytFromPreviewParent = itemView.findViewById(R.id.lytFromPreviewParent);
             txtFromPreview = itemView.findViewById(R.id.txtFromPreview);
@@ -50,7 +56,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         }
     }
 
-    public MessagesAdapter(Context context, List<Message> messageList) {
+    public MessagesAdapter(InboxActivity context, List<Message> messageList) {
+
         this.mContext = context;
         this.mUtils = new Utils(context);
         this.messageList = messageList;
@@ -64,6 +71,8 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_message, parent, false);
 
+      //  mContext = parent.getContext();
+
         return new MessageViewHolder(itemView);
     }
 
@@ -71,18 +80,21 @@ public class MessagesAdapter extends RecyclerView.Adapter<MessagesAdapter.Messag
     public void onBindViewHolder(@NonNull MessageViewHolder holder, int position) {
         final Message message = this.messageListFiltered.get(position);
 
-
-
         holder.lytItemParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (mUtils.isDeviceOnline()) {
-                    Intent intent = new Intent(mContext, EmailActivity.class);
+                    Intent intent = new Intent(mContext, com.example.android.emailapp.gmail.activities.EmailActivity.class);
                     intent.putExtra("messageId", message.getId());
-
-
-
+                   // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     mContext.startActivity(intent);
+
+                    //  Toast.makeText(mContext,"messageId " + message.getSubject(),Toast.LENGTH_LONG).show();
+
+
+
                 } else
                     mUtils.showSnackbar(parent, mContext.getString(R.string.device_is_offline));
             }

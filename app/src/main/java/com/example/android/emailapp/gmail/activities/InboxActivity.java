@@ -33,8 +33,8 @@ import com.example.android.emailapp.gmail.utils.MessagesAdapter;
 import com.example.android.emailapp.gmail.utils.Utils;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
@@ -185,7 +185,7 @@ public class InboxActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         refreshMessages = findViewById(R.id.refreshMessages);
         listMessages = findViewById(R.id.listMessages);
-        fabCompose = findViewById(R.id.fabCompose);
+        //fabCompose = findViewById(R.id.fabCompose);
 
         toolbar.inflateMenu(R.menu.menu_inbox);
 
@@ -232,12 +232,12 @@ public class InboxActivity extends AppCompatActivity {
         });
         listMessages.setAdapter(messagesAdapter);
 
-        fabCompose.setOnClickListener(new View.OnClickListener() {
+      /*  fabCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(InboxActivity.this, ComposeActivity.class));
             }
-        });
+        }); */
     }
 
     /**
