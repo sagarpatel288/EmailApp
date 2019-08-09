@@ -9,6 +9,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/win_live_icon" />
+            android:src="@drawable/win_live_icon"
+            />
     </item>
 </layer-list>
