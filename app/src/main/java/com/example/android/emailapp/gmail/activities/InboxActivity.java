@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.android.emailapp.R;
-import com.example.android.emailapp.gmail.models.Message;
 import com.example.android.emailapp.gmail.utils.EndlessRecyclerViewScrollListener;
 import com.example.android.emailapp.gmail.utils.MessagesAdapter;
 import com.example.android.emailapp.gmail.utils.Utils;
@@ -29,6 +28,7 @@ import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListMessagesResponse;
 import com.google.api.services.gmail.model.MessagePartHeader;
+import com.livemymail.android.mailboxapp.models.Message;
 import com.raizlabs.android.dbflow.sql.language.Delete;
 import com.raizlabs.android.dbflow.sql.language.SQLite;
 

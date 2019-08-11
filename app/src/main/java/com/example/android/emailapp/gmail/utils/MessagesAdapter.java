@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatTextView;
@@ -17,9 +16,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.android.emailapp.R;
-import com.example.android.emailapp.gmail.activities.EmailActivity;
 import com.example.android.emailapp.gmail.activities.InboxActivity;
-import com.example.android.emailapp.gmail.models.Message;
+import com.livemymail.android.mailboxapp.models.Message;
 
 import java.util.ArrayList;
 import java.util.List;

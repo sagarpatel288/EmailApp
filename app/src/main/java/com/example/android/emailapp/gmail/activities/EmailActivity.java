@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -32,7 +31,6 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 
 import com.example.android.emailapp.R;
-import com.example.android.emailapp.gmail.models.Message;
 import com.example.android.emailapp.gmail.utils.Utils;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
@@ -42,10 +40,7 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.Base64;
 import com.google.api.client.util.ExponentialBackOff;
 import com.google.api.services.gmail.Gmail;
-import com.raizlabs.android.dbflow.config.DatabaseConfig;
-import com.raizlabs.android.dbflow.config.FlowConfig;
-import com.raizlabs.android.dbflow.config.FlowManager;
-import com.raizlabs.android.dbflow.sql.language.SQLite;
+import com.livemymail.android.mailboxapp.models.Message;
 import com.transitionseverywhere.TransitionManager;
 import com.wang.avi.AVLoadingIndicatorView;
 
