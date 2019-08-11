@@ -1,9 +1,6 @@
 package com.example.android.emailapp.login;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,10 +9,6 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.example.android.emailapp.R;
-import com.example.android.emailapp.gmail.models.AppDatabase;
-import com.raizlabs.android.dbflow.config.DatabaseConfig;
-import com.raizlabs.android.dbflow.config.FlowConfig;
-import com.raizlabs.android.dbflow.config.FlowManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,7 +76,7 @@ public class StartActivity extends AppCompatActivity  {
 
                 }
                 else if (position == 1) {
-                   Intent intent = new Intent(getApplicationContext(), com.example.android.emailapp.gmail.activities.MainActivity.class);
+                   Intent intent = new Intent(getApplicationContext(), com.livemymail.android.mailboxapp.activities.MainActivity.class);
                    startActivity(intent);
                     Toast.makeText(getApplicationContext(),"gmail",Toast.LENGTH_LONG).show();
                 }

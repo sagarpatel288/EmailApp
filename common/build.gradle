@@ -86,5 +86,5 @@ void utils(configs) {
     //Get circular image view with custom border support
 //    configs.api "com.mikhaellopez:circularimageview:3.2.0"
     //Get image picker and cropper
-//    configs.api "com.theartofdev.edmodo:android-image-cropper:2.8.0"
+    configs.api "com.theartofdev.edmodo:android-image-cropper:2.8.0"
 }

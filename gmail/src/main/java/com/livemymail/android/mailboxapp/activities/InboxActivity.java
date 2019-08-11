@@ -1,4 +1,4 @@
-package com.example.android.emailapp.gmail.activities;
+package com.livemymail.android.mailboxapp.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -9,15 +9,27 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.example.android.emailapp.R;
-import com.example.android.emailapp.gmail.models.Message;
-import com.example.android.emailapp.gmail.utils.EndlessRecyclerViewScrollListener;
-import com.example.android.emailapp.gmail.utils.MessagesAdapter;
-import com.example.android.emailapp.gmail.utils.Utils;
-import com.google.android.gms.common.GoogleApiAvailability;
+import androidx.annotation.NonNull;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import androidx.core.app.ActivityCompat;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
+import androidx.appcompat.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
+
+import com.livemymail.android.mailboxapp.R;
+import com.livemymail.android.mailboxapp.models.Message;
+import com.livemymail.android.mailboxapp.utils.EndlessRecyclerViewScrollListener;
+import com.livemymail.android.mailboxapp.utils.MessagesAdapter;
+import com.livemymail.android.mailboxapp.utils.Utils;
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GooglePlayServicesAvailabilityIOException;
@@ -38,24 +50,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import pub.devrel.easypermissions.EasyPermissions;
 
-import static com.example.android.emailapp.gmail.activities.MainActivity.PREF_ACCOUNT_NAME;
-import static com.example.android.emailapp.gmail.activities.MainActivity.REQUEST_AUTHORIZATION;
-import static com.example.android.emailapp.gmail.activities.MainActivity.REQUEST_GOOGLE_PLAY_SERVICES;
-import static com.example.android.emailapp.gmail.activities.MainActivity.SCOPES;
-import static com.example.android.emailapp.gmail.activities.MainActivity.TAG;
+import static com.livemymail.android.mailboxapp.activities.MainActivity.PREF_ACCOUNT_NAME;
+import static com.livemymail.android.mailboxapp.activities.MainActivity.REQUEST_AUTHORIZATION;
+import static com.livemymail.android.mailboxapp.activities.MainActivity.REQUEST_GOOGLE_PLAY_SERVICES;
+import static com.livemymail.android.mailboxapp.activities.MainActivity.SCOPES;
+import static com.livemymail.android.mailboxapp.activities.MainActivity.TAG;
 
 public class InboxActivity extends AppCompatActivity {
 
@@ -80,8 +81,7 @@ public class InboxActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.gmail_activity_inbox);
+        setContentView(R.layout.activity_inbox);
 
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
@@ -101,6 +101,9 @@ public class InboxActivity extends AppCompatActivity {
                     transport, jsonFactory, mCredential)
                     .setApplicationName("MailBox App")
                     .build();
+
+
+
         } else {
             startActivity(new Intent(InboxActivity.this, MainActivity.class));
             ActivityCompat.finishAffinity(InboxActivity.this);
@@ -176,7 +179,7 @@ public class InboxActivity extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         refreshMessages = findViewById(R.id.refreshMessages);
         listMessages = findViewById(R.id.listMessages);
-        //fabCompose = findViewById(R.id.fabCompose);
+        fabCompose = findViewById(R.id.fabCompose);
 
         toolbar.inflateMenu(R.menu.menu_inbox);
 
@@ -223,12 +226,12 @@ public class InboxActivity extends AppCompatActivity {
         });
         listMessages.setAdapter(messagesAdapter);
 
-      /*  fabCompose.setOnClickListener(new View.OnClickListener() {
+        fabCompose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(InboxActivity.this, ComposeActivity.class));
             }
-        }); */
+        });
     }
 
     /**
@@ -306,11 +309,11 @@ public class InboxActivity extends AppCompatActivity {
 
 
                     // delete all mail
-              /*    for (com.google.api.services.gmail.model.Message message : receivedMessages) {
+                  for (com.google.api.services.gmail.model.Message message : receivedMessages) {
 
                       System.out.println("delete all mail" + message.getId());
                 //    mService.users().messages().delete("me", message.getId()).execute();
-                    }*/
+                    }
 
 
 
@@ -413,5 +416,6 @@ public class InboxActivity extends AppCompatActivity {
                 mUtils.showSnackbar(lytParent, getString(R.string.an_error_occurred));
             }
         }
+
     }
 }

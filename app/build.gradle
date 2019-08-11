@@ -113,6 +113,7 @@ dependencies { configs ->
     google(configs)
     utils(configs)
     implementation project(path: ':common')
+    implementation project(path: ':gmail')
 }
 
 static void google(configs) {
