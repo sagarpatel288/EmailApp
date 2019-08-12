@@ -311,7 +311,7 @@ public class InboxActivity extends AppCompatActivity {
                     // delete all mail
                   for (com.google.api.services.gmail.model.Message message : receivedMessages) {
 
-                      System.out.println("delete all mail" + message.getId());
+                      System.out.println(" all mail" + message.getId());
                 //    mService.users().messages().delete("me", message.getId()).execute();
                     }
 

@@ -72,7 +72,7 @@ public class ComposeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_compose);
+        setContentView(R.layout.activity_composetwo);
 
         // Initialize credentials and service object.
         mCredential = GoogleAccountCredential.usingOAuth2(
@@ -112,7 +112,8 @@ public class ComposeActivity extends AppCompatActivity {
         txtSubject = findViewById(R.id.txtSubject);
         txtMessage = findViewById(R.id.txtMessage);
 
-        toolbar.setTitle(getString(R.string.compose));
+        toolbar.setTitle("text");
+        //getString(R.string.compose)
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
