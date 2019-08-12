@@ -46,10 +46,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_edit_white_48dp"
+        app:srcCompat="@drawable/ic_edit_white_48dp"
         app:fabSize="normal"
         app:layout_anchor="@id/listMessages"
         app:layout_anchorGravity="bottom|right|end"
-        app:useCompatPadding="true" />
+        app:useCompatPadding="true"
+        app:backgroundTint="@color/colorPrimary"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

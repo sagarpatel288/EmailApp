@@ -8,16 +8,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatTextView;
-import androidx.appcompat.widget.Toolbar;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.app.ActivityCompat;
-
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -47,6 +37,14 @@ import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.app.ActivityCompat;
 import pub.devrel.easypermissions.EasyPermissions;
 
 import static com.example.android.emailapp.gmail.activities.MainActivity.PREF_ACCOUNT_NAME;
@@ -99,7 +97,6 @@ public class ComposeActivity extends AppCompatActivity {
             startActivity(new Intent(ComposeActivity.this, MainActivity.class));
             ActivityCompat.finishAffinity(ComposeActivity.this);
         }
-
         initViews();
     }
 
