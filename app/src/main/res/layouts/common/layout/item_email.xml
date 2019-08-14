@@ -1,139 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/lytItemParent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/view_space_8"
-        android:paddingLeft="@dimen/view_space_8"
-        android:paddingEnd="@dimen/view_space_8"
-        android:paddingRight="@dimen/view_space_8">
+        android:background="?attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        tools:targetApi="jelly_bean">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingTop="16dp"
+            android:paddingRight="16dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/lytFromPreviewParent"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/circle_background">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/txtFromPreview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-thin"
+                    android:text="@string/default_m"
+                    android:textColor="@android:color/white"
+                    android:textSize="25sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtFrom"
+                        style="@style/TextAppearance.AppCompat.Subhead"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.7"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:maxLines="1"
+                        android:paddingEnd="5dp"
+                        android:paddingRight="5dp"
+                        android:singleLine="true"
+                        android:text="@string/from"
+                        android:textColor="@color/colorBlackText"
+                        tools:ignore="RtlSymmetry" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="0.3"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-light"
+                        android:gravity="end"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/default_date"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="10sp"
+                        tools:ignore="SmallSp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="16dp"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtSubject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-medium"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/subject"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="13sp" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/txtSnippet"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif-light"
+                        android:maxLines="2"
+                        android:singleLine="false"
+                        android:text="@string/snippet"
+                        android:textColor="@color/colorBlackText"
+                        android:textSize="12sp" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
         <View
-            android:id="@+id/vd_top"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_divider"
-            android:background="@color/colorDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:alpha="0.1"
+            android:background="@android:color/black" />
 
-        </View>
-
-        <TextView
-            android:id="@+id/ctv_top_time_heading"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            android:visibility="gone"
-            android:paddingTop="@dimen/view_space_8"
-            android:paddingBottom="@dimen/view_space_8"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/vd_top"
-            tools:text="@string/placeholder" />
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/civ"
-            android:layout_width="@dimen/size_image_email_listing"
-            android:layout_height="@dimen/size_image_email_listing"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_top_time_heading"
-            app:srcCompat="@drawable/dr_circle_grey"></de.hdodenhof.circleimageview.CircleImageView>
-
-        <TextView
-            android:id="@+id/ctv_civ_letter"
-            style="@style/TextAppearance.MaterialComponents.Overline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintBottom_toBottomOf="@id/civ"
-            app:layout_constraintEnd_toEndOf="@+id/civ"
-            app:layout_constraintLeft_toLeftOf="@id/civ"
-            app:layout_constraintRight_toRightOf="@id/civ"
-            app:layout_constraintStart_toStartOf="@+id/civ"
-            app:layout_constraintTop_toTopOf="@id/civ"
-            tools:text="A" />
-
-        <TextView
-            android:id="@+id/ctv_email_from"
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/view_space_8"
-            android:layout_marginLeft="@dimen/view_space_8"
-            android:layout_marginEnd="@dimen/view_space_8"
-            android:layout_marginRight="@dimen/view_space_8"
-            android:clickable="true"
-            android:ellipsize="end"
-            android:focusable="true"
-            android:maxLines="1"
-            app:layout_constraintEnd_toStartOf="@+id/ctv_time"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toRightOf="@id/civ"
-            app:layout_constraintRight_toLeftOf="@+id/ctv_time"
-            app:layout_constraintStart_toEndOf="@id/civ"
-            app:layout_constraintTop_toTopOf="@id/civ"
-            tools:text="@string/placeholder" />
-
-        <TextView
-            android:id="@+id/ctv_email_subject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/ctv_time"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="@id/ctv_email_from"
-            app:layout_constraintRight_toLeftOf="@+id/ctv_time"
-            app:layout_constraintStart_toStartOf="@+id/ctv_email_from"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_email_from"
-            tools:text="@string/placeholder" />
-
-        <TextView
-            android:id="@+id/ctv_email_preview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="@id/ctv_email_subject"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ctv_email_subject"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_email_subject"
-            tools:text="@string/placeholder" />
-
-        <TextView
-            android:id="@+id/ctv_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ctv_email_from"
-            tools:text="@string/placeholder" />
-
-        <View
-            android:id="@+id/vd_bottom"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/size_divider"
-            android:layout_marginTop="@dimen/view_space_10"
-            android:background="@color/colorDivider"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_email_preview"></View>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 </layout>

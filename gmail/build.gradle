@@ -16,6 +16,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    /*Note: You must configure data binding for app modules that depend on libraries that use data binding,
+    even if the app module doesn't directly use data binding.
+    Source: https://developer.android.com/topic/libraries/data-binding/start
+    */
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {

@@ -76,14 +76,14 @@ public class RvEmailAdapter extends RecyclerView.Adapter {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             OutlookMessage outlookMessage = outLookEmailList.get(position);
             if (outlookMessage.getSender() != null && outlookMessage.getSender().getEmailAddress() != null) {
-                itemViewHolder.mBinding.ctvCivLetter.setText(outlookMessage.getSender().getEmailAddress().getName().substring(0, 1));
-                itemViewHolder.mBinding.ctvEmailFrom.setText(outlookMessage.getSender().getEmailAddress().getName());
+                itemViewHolder.mBinding.txtFromPreview.setText(outlookMessage.getSender().getEmailAddress().getName().substring(0, 1).toUpperCase());
+                itemViewHolder.mBinding.txtFrom.setText(outlookMessage.getSender().getEmailAddress().getName());
             }
-            itemViewHolder.mBinding.ctvEmailSubject.setText(outlookMessage.getSubject());
-            itemViewHolder.mBinding.ctvEmailPreview.setText(outlookMessage.getBodyPreview());
-            
+            itemViewHolder.mBinding.txtSubject.setText(outlookMessage.getSubject());
+            itemViewHolder.mBinding.txtSnippet.setText(outlookMessage.getBodyPreview());
+
             Instant receivedDateTime = Instant.parse(outlookMessage.getReceivedDateTime());
-            itemViewHolder.mBinding.ctvTime.setText(DateUtils.getRelativeDateTimeString(
+            itemViewHolder.mBinding.txtDate.setText(DateUtils.getRelativeDateTimeString(
                     context, receivedDateTime.toEpochMilli(), DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
         }
     }
