@@ -2,6 +2,7 @@ package com.example.android.emailapp.login;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +13,11 @@ import com.example.android.emailapp.pojos.OutlookMessage;
 import com.library.android.common.listeners.Callbacks;
 import com.library.android.common.utils.Utils;
 
-import org.threeten.bp.Duration;
+import org.threeten.bp.Instant;
 import org.threeten.bp.ZonedDateTime;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -79,10 +81,10 @@ public class RvEmailAdapter extends RecyclerView.Adapter {
             }
             itemViewHolder.mBinding.ctvEmailSubject.setText(outlookMessage.getSubject());
             itemViewHolder.mBinding.ctvEmailPreview.setText(outlookMessage.getBodyPreview());
-            ZonedDateTime now = ZonedDateTime.now();
-            ZonedDateTime receivedDateTime = ZonedDateTime.parse(outlookMessage.getReceivedDateTime());
-            itemViewHolder.mBinding.ctvTime.setText(Duration.between(now, receivedDateTime).toString());
-//            itemViewHolder.mBinding.ctvTime.setText(DateUtils.getRelativeDateTimeString(context, ));
+            
+            Instant receivedDateTime = Instant.parse(outlookMessage.getReceivedDateTime());
+            itemViewHolder.mBinding.ctvTime.setText(DateUtils.getRelativeDateTimeString(
+                    context, receivedDateTime.toEpochMilli(), DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
         }
     }
 
