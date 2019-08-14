@@ -30,6 +30,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="true"
+            android:visibility="gone"
             android:paddingTop="@dimen/view_space_8"
             android:paddingBottom="@dimen/view_space_8"
             app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +65,7 @@
             tools:text="A" />
 
         <TextView
-            android:id="@+id/ctv_email_title"
+            android:id="@+id/ctv_email_from"
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -85,7 +86,7 @@
             tools:text="@string/placeholder" />
 
         <TextView
-            android:id="@+id/ctv_email_sub_title"
+            android:id="@+id/ctv_email_subject"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -93,24 +94,24 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toStartOf="@+id/ctv_time"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="@id/ctv_email_title"
+            app:layout_constraintLeft_toLeftOf="@id/ctv_email_from"
             app:layout_constraintRight_toLeftOf="@+id/ctv_time"
-            app:layout_constraintStart_toStartOf="@+id/ctv_email_title"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_email_title"
+            app:layout_constraintStart_toStartOf="@+id/ctv_email_from"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_email_from"
             tools:text="@string/placeholder" />
 
         <TextView
-            android:id="@+id/ctv_email_detail"
+            android:id="@+id/ctv_email_preview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:maxLines="1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0"
-            app:layout_constraintLeft_toLeftOf="@id/ctv_email_sub_title"
+            app:layout_constraintLeft_toLeftOf="@id/ctv_email_subject"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/ctv_email_sub_title"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_email_sub_title"
+            app:layout_constraintStart_toStartOf="@+id/ctv_email_subject"
+            app:layout_constraintTop_toBottomOf="@+id/ctv_email_subject"
             tools:text="@string/placeholder" />
 
         <TextView
@@ -119,7 +120,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ctv_email_title"
+            app:layout_constraintTop_toTopOf="@+id/ctv_email_from"
             tools:text="@string/placeholder" />
 
         <View
@@ -132,7 +133,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ctv_email_detail"></View>
+            app:layout_constraintTop_toBottomOf="@+id/ctv_email_preview"></View>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

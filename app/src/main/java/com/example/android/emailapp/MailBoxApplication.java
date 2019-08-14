@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.multidex.MultiDex;
-
 import com.example.android.emailapp.gmail.models.AppDatabase;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 import com.raizlabs.android.dbflow.config.DatabaseConfig;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.multidex.MultiDex;
 
 public class MailBoxApplication extends Application {
 
@@ -24,7 +25,7 @@ public class MailBoxApplication extends Application {
         super.onCreate();
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
         mResources = getResources();
-
+        AndroidThreeTen.init(this);
         // DBFlow init
         FlowManager.init(new FlowConfig.Builder(this)
                 .addDatabaseConfig(

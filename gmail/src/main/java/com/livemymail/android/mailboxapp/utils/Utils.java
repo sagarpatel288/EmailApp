@@ -73,7 +73,7 @@ public class Utils {
      * @param time long
      * @return String
      */
-    public String timestampToDate(long time) {
+    public static String timestampToDate(long time) {
         Calendar cal = Calendar.getInstance(Locale.ENGLISH);
         cal.setTimeInMillis(time);
         return DateFormat.format("dd/MM/yyyy", cal).toString();

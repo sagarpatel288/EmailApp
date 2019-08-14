@@ -17,6 +17,7 @@ import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
 import com.example.android.emailapp.pojos.OutlookAccess;
 import com.example.android.emailapp.pojos.OutlookDetail;
+import com.example.android.emailapp.pojos.OutlookMessage;
 import com.example.android.emailapp.pojos.OutlookResponse;
 import com.example.android.emailapp.rest.ApiClient;
 import com.example.android.emailapp.rest.ApiInterface;
@@ -156,7 +157,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onResponse(@NonNull Call<OutlookResponse> call, @NonNull retrofit2.Response<OutlookResponse> response) {
                 if (response.body() != null) {
-                    List<OutlookDetail> emails = response.body().getValues();
+                    List<OutlookMessage> emails = response.body().getValues();
                     onGetOutLookEmailList(emails);
                 }
             }
@@ -173,7 +174,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void onGetOutLookEmailList(List<OutlookDetail> emails) {
+    private void onGetOutLookEmailList(List<OutlookMessage> emails) {
         if (mRvEmailAdapter != null) {
             mRvEmailAdapter.addItems(emails);
         }
@@ -187,7 +188,7 @@ public class MainActivity extends BaseActivity {
     private void setRecyclerView() {
         mBinding.rvEmail.setVisibility(View.VISIBLE);
         mBinding.rvEmail.setNestedScrollingEnabled(false);
-        mRvEmailAdapter = new RvEmailAdapter(new ArrayList<>(), this::onClickEmail);
+        mRvEmailAdapter = new RvEmailAdapter(this, new ArrayList<>(), this::onClickEmail);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mBinding.rvEmail.setLayoutManager(linearLayoutManager);
         mBinding.rvEmail.setAdapter(mRvEmailAdapter);
@@ -381,7 +382,7 @@ Mail.Send*/
             @Override
             public void onResponse(@NonNull Call<OutlookResponse> call, @NonNull retrofit2.Response<OutlookResponse> response) {
                 if (response.body() != null) {
-                    List<OutlookDetail> emails = response.body().getValues();
+                    List<OutlookMessage> emails = response.body().getValues();
                     onGetOutLookEmailList(emails);
                 }
             }

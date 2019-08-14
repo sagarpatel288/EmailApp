@@ -32,14 +32,14 @@ public class OutlookResponse implements Parcelable {
     @SerializedName("@odata.context")
     private String oDataContext;
     @SerializedName("value")
-    private List<OutlookDetail> values;
+    private List<OutlookMessage> values;
 
     public OutlookResponse() {
     }
 
     protected OutlookResponse(Parcel in) {
         this.oDataContext = in.readString();
-        this.values = in.createTypedArrayList(OutlookDetail.CREATOR);
+        this.values = in.createTypedArrayList(OutlookMessage.CREATOR);
     }
 
     public String getoDataContext() {
@@ -50,11 +50,11 @@ public class OutlookResponse implements Parcelable {
         this.oDataContext = oDataContext;
     }
 
-    public List<OutlookDetail> getValues() {
+    public List<OutlookMessage> getValues() {
         return values;
     }
 
-    public void setValues(List<OutlookDetail> values) {
+    public void setValues(List<OutlookMessage> values) {
         this.values = values;
     }
 
