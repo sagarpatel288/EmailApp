@@ -1,8 +1,10 @@
 package com.example.android.emailapp.landing;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
+
+import com.example.android.emailapp.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class OutlookLandingActivity extends AppCompatActivity {
 

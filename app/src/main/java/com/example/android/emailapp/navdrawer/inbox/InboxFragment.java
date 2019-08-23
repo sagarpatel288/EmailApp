@@ -1,4 +1,4 @@
-package com.example.android.emailapp.login;
+package com.example.android.emailapp.navdrawer.inbox;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -15,7 +15,6 @@ import com.example.android.emailapp.compose.ComposeActivity;
 import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
-import com.example.android.emailapp.navdrawer.inbox.RvOutlookEmailAdapter;
 import com.example.android.emailapp.pojos.OutlookAccess;
 import com.example.android.emailapp.pojos.OutlookDetail;
 import com.example.android.emailapp.pojos.OutlookMessage;
@@ -40,8 +39,8 @@ import retrofit2.Callback;
 
 import static com.example.android.emailapp.constants.AppApi.REDIRECT_URI;
 
-public class MainActivity extends BaseActivity {
-    public static final String TAG = MainActivity.class.getSimpleName();
+public class InboxFragment extends BaseActivity {
+    public static final String TAG = InboxFragment.class.getSimpleName();
     /* Azure AD v2 Configs */
     /*Office 365 Mail API: https://outlook.office.com*/
     final static String[] SCOPES = {"https://graph.microsoft.com/User.Read",
@@ -212,7 +211,7 @@ public class MainActivity extends BaseActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
-                Toast.makeText(MainActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(InboxFragment.this, "" + response.message(), Toast.LENGTH_SHORT).show();
                 if (mRvOutlookEmailAdapter != null) {
                     mRvOutlookEmailAdapter.removeItem(clickedPosition);
                 }
@@ -338,7 +337,7 @@ Mail.Send*/
                         onGetAccessCode(mAccessCode);
                     }
                 } else if (url.contains("?error")) {
-                    Toast.makeText(MainActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InboxFragment.this, "Error Occured", Toast.LENGTH_SHORT).show();
                     mBinding.webView.setVisibility(View.GONE);
                 }
             }
@@ -355,7 +354,7 @@ Mail.Send*/
                 if (response.body() != null) {
                     OutlookAccess outlookAccess = response.body();
                     onGetOutLookAccess(outlookAccess);
-                    Log.d(MainActivity.class.getSimpleName(), "accessToken: " + outlookAccess.getAccessToken());
+                    Log.d(InboxFragment.class.getSimpleName(), "accessToken: " + outlookAccess.getAccessToken());
                 }
             }
 

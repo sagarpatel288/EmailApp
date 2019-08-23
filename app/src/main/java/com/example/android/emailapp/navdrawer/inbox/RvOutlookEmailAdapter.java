@@ -1,4 +1,4 @@
-package com.example.android.emailapp.login;
+package com.example.android.emailapp.navdrawer.inbox;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.content.res.AppCompatResources;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -40,7 +38,7 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
     private Context context;
     public static final String TAG = RvOutlookEmailAdapter.class.getSimpleName();
 
-    RvOutlookEmailAdapter(Context context, List<OutlookMessage> outLookEmailList, Callbacks.AddEventCallBack addEventCallBack) {
+    public RvOutlookEmailAdapter(Context context, List<OutlookMessage> outLookEmailList, Callbacks.AddEventCallBack addEventCallBack) {
         this.context = context;
         this.outLookEmailList = outLookEmailList;
         this.addEventCallBack = addEventCallBack;

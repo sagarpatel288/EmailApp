@@ -2,61 +2,41 @@ package com.example.android.emailapp.navdrawer;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.android.emailapp.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.android.emailapp.baseui.BaseFragment;
+import com.example.android.emailapp.databinding.FragmentOutlookDrawerBinding;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-public class OutlookDrawerActivity extends AppCompatActivity
+public class OutlookDrawerFragment extends BaseFragment
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_outlook_drawer);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.nav_view);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
-        navigationView.setNavigationItemSelectedListener(this);
-    }
+    private FragmentOutlookDrawerBinding mBinding;
 
-    @Override
     public void onBackPressed() {
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        if (mBinding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            superOnBackPressed();
         }
     }
 
+    private void superOnBackPressed() {
+
+    }
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.outlook_drawer, menu);
-        return true;
+        menuInflater.inflate(R.menu.outlook_drawer, menu);
     }
 
     @Override
@@ -94,8 +74,53 @@ public class OutlookDrawerActivity extends AppCompatActivity
 
         }
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
+        mBinding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.fragment_outlook_drawer;
+    }
+
+    @Override
+    public void onViewStubInflated(View inflatedView, Bundle savedInstanceState) {
+        mBinding = FragmentOutlookDrawerBinding.bind(inflatedView);
+    }
+
+    @Override
+    public void initControllers() {
+
+    }
+
+    @Override
+    public void handleViews() {
+        if (getActivity() != null) {
+            ((AppCompatActivity)getActivity()).setSupportActionBar(mBinding.includeAppBarOutlookDrawer.toolbar);
+        }
+
+        mBinding.includeAppBarOutlookDrawer.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                getActivity(), mBinding.drawerLayout, mBinding.includeAppBarOutlookDrawer.toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mBinding.drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+        mBinding.navView.setNavigationItemSelectedListener(this);
+    }
+
+    @Override
+    public void setListeners() {
+
+    }
+
+    @Override
+    public void restoreValues(Bundle savedInstanceState) {
+
     }
 }

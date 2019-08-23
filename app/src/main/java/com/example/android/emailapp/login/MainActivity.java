@@ -15,6 +15,7 @@ import com.example.android.emailapp.compose.ComposeActivity;
 import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
+import com.example.android.emailapp.navdrawer.inbox.RvOutlookEmailAdapter;
 import com.example.android.emailapp.pojos.OutlookAccess;
 import com.example.android.emailapp.pojos.OutlookDetail;
 import com.example.android.emailapp.pojos.OutlookMessage;
@@ -63,7 +64,7 @@ public class MainActivity extends BaseActivity {
     private ActivityMainBinding mBinding;
 
     private String mAccessCode = "";
-    private RvEmailAdapter mRvEmailAdapter;
+    private RvOutlookEmailAdapter mRvOutlookEmailAdapter;
 
     @Override
     public int getLayoutId() {
@@ -175,8 +176,8 @@ public class MainActivity extends BaseActivity {
     }
 
     private void onGetOutLookEmailList(List<OutlookMessage> emails) {
-        if (mRvEmailAdapter != null) {
-            mRvEmailAdapter.addItems(emails);
+        if (mRvOutlookEmailAdapter != null) {
+            mRvOutlookEmailAdapter.addItems(emails);
         }
     }
 
@@ -188,10 +189,10 @@ public class MainActivity extends BaseActivity {
     private void setRecyclerView() {
         mBinding.rvEmail.setVisibility(View.VISIBLE);
         mBinding.rvEmail.setNestedScrollingEnabled(false);
-        mRvEmailAdapter = new RvEmailAdapter(this, new ArrayList<>(), this::onClickEmail);
+        mRvOutlookEmailAdapter = new RvOutlookEmailAdapter(this, new ArrayList<>(), this::onClickEmail);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         mBinding.rvEmail.setLayoutManager(linearLayoutManager);
-        mBinding.rvEmail.setAdapter(mRvEmailAdapter);
+        mBinding.rvEmail.setAdapter(mRvOutlookEmailAdapter);
     }
 
     private void onClickEmail(View view, int clickedPosition, Intent intent) {
@@ -212,8 +213,8 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
                 Toast.makeText(MainActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
-                if (mRvEmailAdapter != null) {
-                    mRvEmailAdapter.removeItem(clickedPosition);
+                if (mRvOutlookEmailAdapter != null) {
+                    mRvOutlookEmailAdapter.removeItem(clickedPosition);
                 }
             }
 
@@ -227,8 +228,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void setListeners() {
-        mBinding.mbtnOutlookEmail.setOnClickListener(v -> onCallGraphClicked());
-        mBinding.mbtnCompose.setOnClickListener(v -> onClickCompose());
+        mBinding.fabCompose.setOnClickListener(v -> onClickCompose());
     }
 
     @Override

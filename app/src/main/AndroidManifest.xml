@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.android.emailapp">
+          package="com.example.android.emailapp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
 
     <application
         android:name=".MailBoxApplication"
@@ -14,39 +14,42 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".landing.OutlookLandingActivity">
+        </activity>
+        <activity
+            android:name=".navdrawer.OutlookDrawerFragment"
+            android:label="@string/title_activity_outlook_drawer"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".login.StartActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".compose.ComposeActivity" />
+        <activity android:name=".compose.ComposeActivity"/>
         <activity android:name=".login.MainActivity">
-
         </activity> <!-- Intent filter to capture System Browser calling back to our app after Sign In -->
-
         <!-- Gmail -->
         <activity android:name=".gmail.activities.MainActivity"/>
-        <activity android:name=".gmail.activities.InboxActivity"
-            android:theme="@style/AppTheme.Launcher"
-            />
+        <activity
+            android:name=".gmail.activities.InboxActivity"
+            android:theme="@style/AppTheme.Launcher"/>
         <activity android:name=".gmail.activities.ComposeActivity"/>
         <activity android:name=".gmail.activities.EmailActivity"/>
-
-
         <activity android:name="com.microsoft.identity.client.BrowserTabActivity">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.VIEW"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
 
                 <!-- Add in your scheme/host from registered redirect URI -->
                 <data
                     android:host="com.example.android.emailapp"
                     android:path="/2jmj7l5rSw0yVb/vlWAYkK/YBwk="
-                    android:scheme="msauth" />
+                    android:scheme="msauth"/>
             </intent-filter>
         </activity>
     </application>
