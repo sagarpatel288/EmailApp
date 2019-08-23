@@ -14,13 +14,13 @@ import com.library.android.common.listeners.Callbacks;
 import com.library.android.common.utils.Utils;
 
 import org.threeten.bp.Instant;
-import org.threeten.bp.ZonedDateTime;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.content.res.AppCompatResources;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 /**
@@ -33,14 +33,14 @@ import androidx.recyclerview.widget.RecyclerView;
  * @see
  * @since $
  */
-public class RvEmailAdapter extends RecyclerView.Adapter {
+public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
 
     private List<OutlookMessage> outLookEmailList = new ArrayList<>();
     private Callbacks.AddEventCallBack addEventCallBack;
     private Context context;
-    public static final String TAG = RvEmailAdapter.class.getSimpleName();
+    public static final String TAG = RvOutlookEmailAdapter.class.getSimpleName();
 
-    RvEmailAdapter(Context context, List<OutlookMessage> outLookEmailList, Callbacks.AddEventCallBack addEventCallBack) {
+    RvOutlookEmailAdapter(Context context, List<OutlookMessage> outLookEmailList, Callbacks.AddEventCallBack addEventCallBack) {
         this.context = context;
         this.outLookEmailList = outLookEmailList;
         this.addEventCallBack = addEventCallBack;
