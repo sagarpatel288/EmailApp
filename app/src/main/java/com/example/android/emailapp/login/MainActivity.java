@@ -94,9 +94,9 @@ public class MainActivity extends BaseActivity {
             if (!accounts.isEmpty()) {
                 /* This sample doesn't support multi-account scenarios, use the first account */
                 emailApp.acquireTokenSilentAsync(SCOPES, accounts.get(0), getAuthSilentCallback());
-            } /*else {
-             *//* No accounts or >1 account *//*
-            }*/
+            } else {
+                onCallGraphClicked();
+            }
         });
     }
 
