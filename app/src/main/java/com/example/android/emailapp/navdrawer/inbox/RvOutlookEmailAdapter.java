@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chauthai.swipereveallayout.ViewBinderHelper;
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.databinding.ItemEmailBinding;
 import com.example.android.emailapp.pojos.OutlookMessage;
@@ -37,11 +38,14 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
     private Callbacks.AddEventCallBack addEventCallBack;
     private Context context;
     public static final String TAG = RvOutlookEmailAdapter.class.getSimpleName();
+    // This object helps you save/restore the open/close state of each view
+    private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
     public RvOutlookEmailAdapter(Context context, List<OutlookMessage> outLookEmailList, Callbacks.AddEventCallBack addEventCallBack) {
         this.context = context;
         this.outLookEmailList = outLookEmailList;
         this.addEventCallBack = addEventCallBack;
+        viewBinderHelper.setOpenOnlyOne(true);
     }
 
     public List<OutlookMessage> getOutLookEmailList() {
@@ -73,6 +77,9 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
         if (position != -1 && holder instanceof ItemViewHolder) {
             ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
             OutlookMessage outlookMessage = outLookEmailList.get(position);
+            // Save/restore the open/close state.
+            // You need to provide a String id which uniquely defines the data object.
+            viewBinderHelper.bind(itemViewHolder.mBinding.swipeLayout, outlookMessage.getId());
             if (outlookMessage.getSender() != null && outlookMessage.getSender().getEmailAddress() != null) {
                 itemViewHolder.mBinding.txtFromPreview.setText(outlookMessage.getSender().getEmailAddress().getName().substring(0, 1).toUpperCase());
                 itemViewHolder.mBinding.txtFrom.setText(outlookMessage.getSender().getEmailAddress().getName());

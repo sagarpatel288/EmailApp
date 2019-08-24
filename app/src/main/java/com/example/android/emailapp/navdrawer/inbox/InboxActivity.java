@@ -39,8 +39,8 @@ import retrofit2.Callback;
 
 import static com.example.android.emailapp.constants.AppApi.REDIRECT_URI;
 
-public class InboxFragment extends BaseActivity {
-    public static final String TAG = InboxFragment.class.getSimpleName();
+public class InboxActivity extends BaseActivity {
+    public static final String TAG = InboxActivity.class.getSimpleName();
     /* Azure AD v2 Configs */
     /*Office 365 Mail API: https://outlook.office.com*/
     final static String[] SCOPES = {"https://graph.microsoft.com/User.Read",
@@ -211,7 +211,7 @@ public class InboxFragment extends BaseActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
-                Toast.makeText(InboxFragment.this, "" + response.message(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(InboxActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
                 if (mRvOutlookEmailAdapter != null) {
                     mRvOutlookEmailAdapter.removeItem(clickedPosition);
                 }
@@ -337,7 +337,7 @@ Mail.Send*/
                         onGetAccessCode(mAccessCode);
                     }
                 } else if (url.contains("?error")) {
-                    Toast.makeText(InboxFragment.this, "Error Occured", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(InboxActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
                     mBinding.webView.setVisibility(View.GONE);
                 }
             }
@@ -354,7 +354,7 @@ Mail.Send*/
                 if (response.body() != null) {
                     OutlookAccess outlookAccess = response.body();
                     onGetOutLookAccess(outlookAccess);
-                    Log.d(InboxFragment.class.getSimpleName(), "accessToken: " + outlookAccess.getAccessToken());
+                    Log.d(InboxActivity.class.getSimpleName(), "accessToken: " + outlookAccess.getAccessToken());
                 }
             }
 

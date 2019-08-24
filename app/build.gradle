@@ -136,4 +136,5 @@ void utils(configs) {
         exclude group: 'com.android.support'
     }
     configs.implementation 'com.microsoft.identity.client:msal:0.3.+'
+    configs.implementation 'com.chauthai.swipereveallayout:swipe-reveal-layout:1.4.1'
 }
