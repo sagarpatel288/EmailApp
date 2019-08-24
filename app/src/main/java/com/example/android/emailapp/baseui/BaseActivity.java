@@ -2,6 +2,7 @@ package com.example.android.emailapp.baseui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ProgressBar;
@@ -101,11 +102,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public Intent getBaseIntent(String key, String value, Class targetClass) {
+        mIntent = getBaseIntent();
+        mIntent.putExtra(key, value);
+        mIntent.setClass(this, targetClass);
+        return mIntent;
+    }
+
+    public Intent getBaseIntent() {
         if (mIntent == null) {
             mIntent = new Intent();
         }
         mIntent.putExtra(BaseKeys.SCREEN, getClass().getSimpleName());
-        mIntent.putExtra(key, value);
+        return mIntent;
+    }
+
+    public Intent getBaseIntent(Object parcelableObject, Class targetClass) {
+        mIntent = getBaseIntent();
+        mIntent.putExtra(BaseKeys.PARCEL, (Parcelable) parcelableObject);
         mIntent.setClass(this, targetClass);
         return mIntent;
     }

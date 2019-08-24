@@ -15,6 +15,7 @@ import com.example.android.emailapp.compose.ComposeActivity;
 import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
+import com.example.android.emailapp.detail.OutlookDetailActivity;
 import com.example.android.emailapp.navdrawer.inbox.RvOutlookEmailAdapter;
 import com.example.android.emailapp.pojos.OutlookAccess;
 import com.example.android.emailapp.pojos.OutlookMessage;
@@ -78,6 +79,73 @@ public class MainActivity extends BaseActivity {
     @Override
     public void initControllers() {
         configureAzure();
+    }
+
+    @Override
+    public void handleViews() {
+        setRecyclerView();
+    }
+
+    private void setRecyclerView() {
+        mBinding.rvEmail.setVisibility(View.VISIBLE);
+        mBinding.rvEmail.setNestedScrollingEnabled(false);
+        mRvOutlookEmailAdapter = new RvOutlookEmailAdapter(this, new ArrayList<>(), this::onClickEmail);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        mBinding.rvEmail.setLayoutManager(linearLayoutManager);
+        mBinding.rvEmail.setAdapter(mRvOutlookEmailAdapter);
+    }
+
+    private void onClickEmail(View view, int clickedPosition, Intent intent) {
+        if (Utils.hasParcel(intent)) {
+            if (Utils.getParcel(intent) instanceof OutlookMessage) {
+                OutlookMessage clickedEmail = (OutlookMessage) Utils.getParcel(intent);
+                if (view.getId() == R.id.cbtn_delete || view.getId() == R.id.layout_delete) {
+                    deleteEmail(clickedPosition, clickedEmail);
+                } else {
+                    startActivity(getBaseIntent(clickedEmail, OutlookDetailActivity.class));
+                }
+            }
+        }
+    }
+
+    private void deleteEmail(int clickedPosition, OutlookMessage clickedEmail) {
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        Call<ResponseBody> call = apiService.deleteOutlookEmail("Bearer " + authResult.getAccessToken(), clickedEmail.getId());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
+                Toast.makeText(MainActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
+                if (mRvOutlookEmailAdapter != null) {
+                    mRvOutlookEmailAdapter.removeItem(clickedPosition);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                // Log error here since request failed
+                Toast.makeText(MainActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                Log.e(TAG, t.toString());
+            }
+        });
+    }
+
+    @Override
+    public void setListeners() {
+        mBinding.fabCompose.setOnClickListener(v -> onClickCompose());
+    }
+
+    @Override
+    public void restoreValues(Bundle savedInstanceState) {
+
+    }
+
+    private void onClickCompose() {
+        if (authResult != null && StringUtils.isNotNullNotEmpty(authResult.getAccessToken())) {
+            startActivity(getBaseIntent(AppKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
+        } else {
+            Toast.makeText(this, "Please verify first", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void configureAzure() {
@@ -174,82 +242,11 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private void onGetOutLookEmailList(List<OutlookMessage> emails) {
-        if (mRvOutlookEmailAdapter != null) {
-            mRvOutlookEmailAdapter.addItems(emails);
-        }
-    }
-
-    @Override
-    public void handleViews() {
-        setRecyclerView();
-    }
-
-    private void setRecyclerView() {
-        mBinding.rvEmail.setVisibility(View.VISIBLE);
-        mBinding.rvEmail.setNestedScrollingEnabled(false);
-        mRvOutlookEmailAdapter = new RvOutlookEmailAdapter(this, new ArrayList<>(), this::onClickEmail);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mBinding.rvEmail.setLayoutManager(linearLayoutManager);
-        mBinding.rvEmail.setAdapter(mRvOutlookEmailAdapter);
-    }
-
-    private void onClickEmail(View view, int clickedPosition, Intent intent) {
-        if (Utils.hasParcel(intent)) {
-            if (Utils.getParcel(intent) instanceof OutlookMessage) {
-                OutlookMessage clickedEmail = (OutlookMessage) Utils.getParcel(intent);
-                if (view.getId() == R.id.cbtn_delete || view.getId() == R.id.layout_delete) {
-                    deleteEmail(clickedPosition, clickedEmail);
-                }
-            }
-        }
-    }
-
-    private void deleteEmail(int clickedPosition, OutlookMessage clickedEmail) {
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> call = apiService.deleteOutlookEmail("Bearer " + authResult.getAccessToken(), clickedEmail.getId());
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
-                Toast.makeText(MainActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
-                if (mRvOutlookEmailAdapter != null) {
-                    mRvOutlookEmailAdapter.removeItem(clickedPosition);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                // Log error here since request failed
-                Toast.makeText(MainActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
-                Log.e(TAG, t.toString());
-            }
-        });
-    }
-
-    @Override
-    public void setListeners() {
-        mBinding.fabCompose.setOnClickListener(v -> onClickCompose());
-    }
-
-    @Override
-    public void restoreValues(Bundle savedInstanceState) {
-
-    }
-
     /* Use MSAL to acquireToken for the end-user
      * Callback will call Graph api w/ access token & update UI
      */
     private void onCallGraphClicked() {
         emailApp.acquireToken(this, SCOPES, getAuthInteractiveCallback());
-    }
-
-    private void onClickCompose() {
-        if (authResult != null && StringUtils.isNotNullNotEmpty(authResult.getAccessToken())) {
-            startActivity(getBaseIntent(AppKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
-        } else {
-            Toast.makeText(this, "Please verify first", Toast.LENGTH_SHORT).show();
-        }
     }
 
     /* Callback used for interactive request.  If succeeds we use the access
@@ -394,5 +391,11 @@ Mail.Send*/
                 Log.e(TAG, t.toString());
             }
         });
+    }
+
+    private void onGetOutLookEmailList(List<OutlookMessage> emails) {
+        if (mRvOutlookEmailAdapter != null) {
+            mRvOutlookEmailAdapter.addItems(emails);
+        }
     }
 }

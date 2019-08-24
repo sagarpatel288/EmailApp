@@ -7,6 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.microsoft.services.outlook.Attachment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class OutlookMessage implements Parcelable {
@@ -28,7 +29,7 @@ public class OutlookMessage implements Parcelable {
     };
     @SerializedName("bccRecipients")
     @Expose
-    private List<BccRecipient> bccRecipients = null;
+    private List<BccRecipient> bccRecipients = new ArrayList<>();
     @SerializedName("body")
     @Expose
     private Body body;
@@ -37,10 +38,10 @@ public class OutlookMessage implements Parcelable {
     private String bodyPreview;
     @SerializedName("categories")
     @Expose
-    private List<String> categories = null;
+    private List<String> categories = new ArrayList<>();
     @SerializedName("ccRecipients")
     @Expose
-    private List<CcRecipient> ccRecipients = null;
+    private List<CcRecipient> ccRecipients = new ArrayList<>();
     @SerializedName("changeKey")
     @Expose
     private String changeKey;
@@ -70,7 +71,7 @@ public class OutlookMessage implements Parcelable {
     private String inferenceClassification;
     @SerializedName("internetMessageHeaders")
     @Expose
-    private List<InternetMessageHeader> internetMessageHeaders = null;
+    private List<InternetMessageHeader> internetMessageHeaders = new ArrayList<>();
     @SerializedName("internetMessageId")
     @Expose
     private String internetMessageId;
@@ -97,7 +98,7 @@ public class OutlookMessage implements Parcelable {
     private String receivedDateTime;
     @SerializedName("replyTo")
     @Expose
-    private List<ReplyTo> replyTo = null;
+    private List<ReplyTo> replyTo = new ArrayList<>();
     @SerializedName("sender")
     @Expose
     private Sender sender;
@@ -109,7 +110,7 @@ public class OutlookMessage implements Parcelable {
     private String subject;
     @SerializedName("toRecipients")
     @Expose
-    private List<ToRecipient> toRecipients = null;
+    private List<ToRecipient> toRecipients = new ArrayList<>();
     @SerializedName("uniqueBody")
     @Expose
     private UniqueBody uniqueBody;
@@ -118,16 +119,16 @@ public class OutlookMessage implements Parcelable {
     private String webLink;
     @SerializedName("attachments")
     @Expose
-    private List<Attachment> attachments = null;
+    private List<Attachment> attachments = new ArrayList<>();
     @SerializedName("extensions")
     @Expose
-    private List<Extension> extensions = null;
+    private List<Extension> extensions = new ArrayList<>();
     @SerializedName("multiValueExtendedProperties")
     @Expose
-    private List<MultiValueExtendedProperty> multiValueExtendedProperties = null;
+    private List<MultiValueExtendedProperty> multiValueExtendedProperties = new ArrayList<>();
     @SerializedName("singleValueExtendedProperties")
     @Expose
-    private List<SingleValueExtendedProperty> singleValueExtendedProperties = null;
+    private List<SingleValueExtendedProperty> singleValueExtendedProperties = new ArrayList<>();
 
     protected OutlookMessage(Parcel in) {
         in.readList(this.bccRecipients, (com.example.android.emailapp.pojos.BccRecipient.class.getClassLoader()));

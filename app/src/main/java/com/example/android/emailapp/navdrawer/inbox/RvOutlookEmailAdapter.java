@@ -119,7 +119,7 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
         public ItemViewHolder(@NonNull View itemView, ItemEmailBinding mBinding) {
             super(itemView);
             this.mBinding = mBinding;
-            ViewUtils.setOnClickListener(this, mBinding.layoutDelete, mBinding.cbtnDelete);
+            ViewUtils.setOnClickListener(this, itemView, mBinding.layoutFrontMain, mBinding.lytItemParent, mBinding.layoutDelete, mBinding.cbtnDelete);
         }
 
         @Override
