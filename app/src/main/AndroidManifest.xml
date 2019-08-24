@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".compose.ComposeActivity"
-            android:theme="@style/AppThemeOutlook"
+            android:theme="@style/AppThemeOutlookNormal"
             />
         <activity android:name=".login.MainActivity"
             android:theme="@style/AppThemeOutlook"

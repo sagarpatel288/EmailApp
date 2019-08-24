@@ -68,5 +68,5 @@ POST /users/{id | userPrincipalName}/sendMail*/
 Authorization	Bearer {token}. Required.
 Content-Type	application/json*/
     @POST(AppUrls.OutlookUrls.SEND_EMAIL)
-    Call<ResponseBody> sendEmail(@Header("Authorization") String bearerPlusToken, @Body JsonObject message);
+    Call<Void> sendEmail(@Header("Authorization") String bearerPlusToken, @Body JsonObject message);
 }

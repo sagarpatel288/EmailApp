@@ -24,7 +24,6 @@ import com.library.android.common.listeners.Callbacks;
 import com.library.android.common.utils.EditTextUtils;
 import com.library.android.common.utils.Utils;
 import com.microsoft.services.outlook.BodyType;
-import com.squareup.okhttp.ResponseBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -125,18 +124,19 @@ public class ComposeActivity extends BaseActivity {
     private void sendEmail() {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseBody> call = apiService.sendEmail("Bearer " + accessToken, getPostDataSendEmail());
-        call.enqueue(new Callback<ResponseBody>() {
+        Call<Void> call = apiService.sendEmail("Bearer " + accessToken, getPostDataSendEmail());
+        call.enqueue(new Callback<Void>() {
             @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<Void> call, @NonNull retrofit2.Response<Void> response) {
                 Log.d(TAG, "onResponse: " + response.body());
-                Toast.makeText(ComposeActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ComposeActivity.this, "sent", Toast.LENGTH_SHORT).show();
             }
 
             @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+            public void onFailure(@NonNull Call<Void> call, @NonNull Throwable t) {
                 // Log error here since request failed
                 Log.e(TAG, t.toString());
+                Toast.makeText(ComposeActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
             }
         });
     }
