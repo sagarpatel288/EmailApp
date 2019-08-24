@@ -127,6 +127,14 @@ public final class ViewUtils {
         }
     }
 
+    public static void setOnClickListener(View.OnClickListener onClickListener, View... views) {
+        if (views != null && views.length > 0) {
+            for (View view : views) {
+                view.setOnClickListener(onClickListener);
+            }
+        }
+    }
+
     public static void setOnFocusChangeListener(Activity activity, View... views) {
         if (activity != null && views != null && views.length > 0) {
             for (View view : views) {

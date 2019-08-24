@@ -13,6 +13,7 @@ import com.example.android.emailapp.databinding.ItemEmailBinding;
 import com.example.android.emailapp.pojos.OutlookMessage;
 import com.library.android.common.listeners.Callbacks;
 import com.library.android.common.utils.Utils;
+import com.library.android.common.utils.ViewUtils;
 
 import org.threeten.bp.Instant;
 
@@ -35,16 +36,16 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
 
     private List<OutlookMessage> outLookEmailList = new ArrayList<>();
-    private Callbacks.AddEventCallBack addEventCallBack;
+    private Callbacks.AddEventCallBack eventCallBack;
     private Context context;
     public static final String TAG = RvOutlookEmailAdapter.class.getSimpleName();
     // This object helps you save/restore the open/close state of each view
     private final ViewBinderHelper viewBinderHelper = new ViewBinderHelper();
 
-    public RvOutlookEmailAdapter(Context context, List<OutlookMessage> outLookEmailList, Callbacks.AddEventCallBack addEventCallBack) {
+    public RvOutlookEmailAdapter(Context context, List<OutlookMessage> outLookEmailList, Callbacks.AddEventCallBack eventCallBack) {
         this.context = context;
         this.outLookEmailList = outLookEmailList;
-        this.addEventCallBack = addEventCallBack;
+        this.eventCallBack = eventCallBack;
         viewBinderHelper.setOpenOnlyOne(true);
     }
 
@@ -56,12 +57,12 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
         this.outLookEmailList = outLookEmailList;
     }
 
-    public Callbacks.AddEventCallBack getAddEventCallBack() {
-        return addEventCallBack;
+    public Callbacks.AddEventCallBack getEventCallBack() {
+        return eventCallBack;
     }
 
-    public void setAddEventCallBack(Callbacks.AddEventCallBack addEventCallBack) {
-        this.addEventCallBack = addEventCallBack;
+    public void setEventCallBack(Callbacks.AddEventCallBack eventCallBack) {
+        this.eventCallBack = eventCallBack;
     }
 
     @NonNull
@@ -107,6 +108,7 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
         if (clickedPosition != -1 && Utils.isNotNullNotEmpty(outLookEmailList) && outLookEmailList.size() > clickedPosition) {
             outLookEmailList.remove(clickedPosition);
             notifyItemRemoved(clickedPosition);
+            notifyItemRangeChanged(clickedPosition, getItemCount());
         }
     }
 
@@ -117,7 +119,7 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
         public ItemViewHolder(@NonNull View itemView, ItemEmailBinding mBinding) {
             super(itemView);
             this.mBinding = mBinding;
-            itemView.setOnClickListener(this);
+            ViewUtils.setOnClickListener(this, mBinding.layoutDelete, mBinding.cbtnDelete);
         }
 
         @Override
@@ -125,8 +127,8 @@ public class RvOutlookEmailAdapter extends RecyclerView.Adapter {
             int clickedPosition = getAdapterPosition();
             if (clickedPosition != -1 && Utils.isNotNullNotEmpty(outLookEmailList)) {
                 OutlookMessage outlookMessage = outLookEmailList.get(clickedPosition);
-                if (outlookMessage != null && getAddEventCallBack() != null) {
-                    getAddEventCallBack().onEventCallBack(v, clickedPosition, Utils.setParcel(new Intent(), outlookMessage));
+                if (outlookMessage != null && getEventCallBack() != null) {
+                    getEventCallBack().onEventCallBack(v, clickedPosition, Utils.setParcel(new Intent(), outlookMessage));
                 }
             }
         }

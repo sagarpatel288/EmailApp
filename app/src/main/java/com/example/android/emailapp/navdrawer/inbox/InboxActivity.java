@@ -198,8 +198,9 @@ public class InboxActivity extends BaseActivity {
         if (Utils.hasParcel(intent)) {
             if (Utils.getParcel(intent) instanceof OutlookDetail) {
                 OutlookDetail clickedEmail = (OutlookDetail) Utils.getParcel(intent);
-                Toast.makeText(this, "" + clickedEmail.getBodyPreview(), Toast.LENGTH_SHORT).show();
-                deleteEmail(clickedPosition, clickedEmail);
+                if (view.getId() == R.id.cbtn_delete || view.getId() == R.id.layout_delete) {
+                    deleteEmail(clickedPosition, clickedEmail);
+                }
             }
         }
     }
@@ -235,19 +236,19 @@ public class InboxActivity extends BaseActivity {
 
     }
 
-    /* Use MSAL to acquireToken for the end-user
-     * Callback will call Graph api w/ access token & update UI
-     */
-    private void onCallGraphClicked() {
-        emailApp.acquireToken(this, SCOPES, getAuthInteractiveCallback());
-    }
-
     private void onClickCompose() {
         if (authResult != null && StringUtils.isNotNullNotEmpty(authResult.getAccessToken())) {
             startActivity(getBaseIntent(AppKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
         } else {
             Toast.makeText(this, "Please verify first", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    /* Use MSAL to acquireToken for the end-user
+     * Callback will call Graph api w/ access token & update UI
+     */
+    private void onCallGraphClicked() {
+        emailApp.acquireToken(this, SCOPES, getAuthInteractiveCallback());
     }
 
     /* Callback used for interactive request.  If succeeds we use the access

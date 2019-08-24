@@ -17,7 +17,6 @@ import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
 import com.example.android.emailapp.navdrawer.inbox.RvOutlookEmailAdapter;
 import com.example.android.emailapp.pojos.OutlookAccess;
-import com.example.android.emailapp.pojos.OutlookDetail;
 import com.example.android.emailapp.pojos.OutlookMessage;
 import com.example.android.emailapp.pojos.OutlookResponse;
 import com.example.android.emailapp.rest.ApiClient;
@@ -197,15 +196,16 @@ public class MainActivity extends BaseActivity {
 
     private void onClickEmail(View view, int clickedPosition, Intent intent) {
         if (Utils.hasParcel(intent)) {
-            if (Utils.getParcel(intent) instanceof OutlookDetail) {
-                OutlookDetail clickedEmail = (OutlookDetail) Utils.getParcel(intent);
-                Toast.makeText(this, "" + clickedEmail.getBodyPreview(), Toast.LENGTH_SHORT).show();
-                deleteEmail(clickedPosition, clickedEmail);
+            if (Utils.getParcel(intent) instanceof OutlookMessage) {
+                OutlookMessage clickedEmail = (OutlookMessage) Utils.getParcel(intent);
+                if (view.getId() == R.id.cbtn_delete || view.getId() == R.id.layout_delete) {
+                    deleteEmail(clickedPosition, clickedEmail);
+                }
             }
         }
     }
 
-    private void deleteEmail(int clickedPosition, OutlookDetail clickedEmail) {
+    private void deleteEmail(int clickedPosition, OutlookMessage clickedEmail) {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ResponseBody> call = apiService.deleteOutlookEmail("Bearer " + authResult.getAccessToken(), clickedEmail.getId());
@@ -221,6 +221,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 // Log error here since request failed
+                Toast.makeText(MainActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
                 Log.e(TAG, t.toString());
             }
         });
