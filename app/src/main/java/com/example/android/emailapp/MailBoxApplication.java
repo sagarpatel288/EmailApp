@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
-import com.example.android.emailapp.gmail.models.AppDatabase;
 import com.jakewharton.threetenabp.AndroidThreeTen;
+import com.livemymail.android.mailboxapp.models.AppDatabase;
 import com.raizlabs.android.dbflow.config.DatabaseConfig;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowManager;
