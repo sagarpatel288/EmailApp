@@ -14,7 +14,7 @@ public final class BaseKeys {
     public static final String PARCEL = "parcel";
     public static final String POSITION = "position";
     public static final String SCREEN = "screen";
-
+    public static final String API = "api";
     private BaseKeys() {
     }
 }

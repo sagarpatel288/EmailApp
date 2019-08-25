@@ -7,12 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.baseui.BaseActivity;
 import com.example.android.emailapp.compose.ComposeActivity;
 import com.example.android.emailapp.constants.AppKeys;
+import com.example.android.emailapp.constants.AppUrls;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
 import com.example.android.emailapp.detail.OutlookDetailActivity;
@@ -34,35 +34,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 import static com.example.android.emailapp.constants.AppApi.REDIRECT_URI;
 
 public class MainActivity extends BaseActivity {
     public static final String TAG = MainActivity.class.getSimpleName();
+    public static final int DETAIL = 1;
     /* Azure AD v2 Configs */
     /*Office 365 Mail API: https://outlook.office.com*/
     final static String[] SCOPES = {"https://graph.microsoft.com/User.Read",
             "https://graph.microsoft.com/Mail.ReadWrite",
             "https://graph.microsoft.com/Mail.Send"};
-
     /*https://graph.microsoft.com/v1.0/me/messages*/
     private static final String OUTLOOK_AUTH_URI = "https://login.microsoftonline.com/common/oauth2/v2.0/";
     private static final String CLIENT_ID = "5f620588-8746-4c7d-8bfd-ea5331a4b1d2";
-    private static final String CLIENT_SECRET = "3*I/iUA3z+FL4+y35-4V[T+2EdtLY+qp";
     /*GET https://login.microsoftonline.com/common/oauth2/v2.0/
     authorize?client_id=<CLIENT ID>
     &redirect_uri=http%3A%2F%2Flocalhost%2Fmyapp%2F
     &response_type=code
     &scope=openid+Mail.Read*/
-
+    private static final String CLIENT_SECRET = "3*I/iUA3z+FL4+y35-4V[T+2EdtLY+qp";
     /* Azure AD Variables */
     private PublicClientApplication emailApp;
     private IAuthenticationResult authResult;
     private ActivityMainBinding mBinding;
-
     private String mAccessCode = "";
     private RvOutlookEmailAdapter mRvOutlookEmailAdapter;
 
@@ -102,7 +103,11 @@ public class MainActivity extends BaseActivity {
                 if (view.getId() == R.id.cbtn_delete || view.getId() == R.id.layout_delete) {
                     deleteEmail(clickedPosition, clickedEmail);
                 } else {
-                    startActivity(getBaseIntent(clickedEmail, OutlookDetailActivity.class));
+                    if (authResult != null && StringUtils.isNotNullNotEmpty(authResult.getAccessToken())) {
+                        startActivityForResult(getBaseIntent(clickedEmail, JsonKeys.ACCESS_TOKEN, authResult.getAccessToken(), clickedPosition, OutlookDetailActivity.class), DETAIL);
+                    } else {
+                        makeText(this, "Authentication error!", LENGTH_SHORT).show();
+                    }
                 }
             }
         }
@@ -115,19 +120,23 @@ public class MainActivity extends BaseActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
-                Toast.makeText(MainActivity.this, "" + response.message(), Toast.LENGTH_SHORT).show();
-                if (mRvOutlookEmailAdapter != null) {
-                    mRvOutlookEmailAdapter.removeItem(clickedPosition);
-                }
+                makeText(MainActivity.this, "" + response.message(), LENGTH_SHORT).show();
+                deleteEmail(clickedPosition);
             }
 
             @Override
             public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 // Log error here since request failed
-                Toast.makeText(MainActivity.this, "something went wrong!", Toast.LENGTH_SHORT).show();
+                makeText(MainActivity.this, "something went wrong!", LENGTH_SHORT).show();
                 Log.e(TAG, t.toString());
             }
         });
+    }
+
+    public void deleteEmail(int position) {
+        if (mRvOutlookEmailAdapter != null) {
+            mRvOutlookEmailAdapter.removeItem(position);
+        }
     }
 
     @Override
@@ -144,7 +153,7 @@ public class MainActivity extends BaseActivity {
         if (authResult != null && StringUtils.isNotNullNotEmpty(authResult.getAccessToken())) {
             startActivity(getBaseIntent(AppKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
         } else {
-            Toast.makeText(this, "Please verify first", Toast.LENGTH_SHORT).show();
+            makeText(this, "Please verify first", LENGTH_SHORT).show();
         }
     }
 
@@ -336,7 +345,7 @@ Mail.Send*/
                         onGetAccessCode(mAccessCode);
                     }
                 } else if (url.contains("?error")) {
-                    Toast.makeText(MainActivity.this, "Error Occured", Toast.LENGTH_SHORT).show();
+                    makeText(MainActivity.this, "Error Occured", LENGTH_SHORT).show();
                     mBinding.webView.setVisibility(View.GONE);
                 }
             }
@@ -397,5 +406,21 @@ Mail.Send*/
         if (mRvOutlookEmailAdapter != null) {
             mRvOutlookEmailAdapter.addItems(emails);
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == DETAIL) {
+            if (resultCode == RESULT_OK) {
+                if (Utils.hasApi(data)) {
+                    if (Utils.getApi(data, "").equalsIgnoreCase(AppUrls.OutlookUrls.DELETE_EMAIL)) {
+                        if (Utils.getPosition(data, -1) != -1) {
+                            deleteEmail(Utils.getPosition(data, -1));
+                        }
+                    }
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

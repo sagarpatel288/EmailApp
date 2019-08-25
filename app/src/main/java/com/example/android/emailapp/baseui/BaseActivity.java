@@ -122,4 +122,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         mIntent.setClass(this, targetClass);
         return mIntent;
     }
+
+    public Intent getBaseIntent(Object parcelableObject, int position, Class targetClass) {
+        mIntent = getBaseIntent(parcelableObject, targetClass);
+        mIntent.putExtra(BaseKeys.POSITION, position);
+        return mIntent;
+    }
+
+    public Intent getBaseIntent(Object parcelableObject, String key, String value, int position, Class targetClass) {
+        mIntent = getBaseIntent(parcelableObject, position, targetClass);
+        mIntent.putExtra(key, value);
+        return mIntent;
+    }
 }

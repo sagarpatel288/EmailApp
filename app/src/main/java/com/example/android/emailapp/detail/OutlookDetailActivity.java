@@ -6,6 +6,8 @@ import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebResourceError;
@@ -17,17 +19,39 @@ import android.webkit.WebViewClient;
 
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.baseui.BaseActivity;
+import com.example.android.emailapp.constants.AppUrls;
+import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityOutlookDetailBinding;
 import com.example.android.emailapp.pojos.OutlookMessage;
+import com.example.android.emailapp.rest.ApiClient;
+import com.example.android.emailapp.rest.ApiInterface;
 import com.library.android.common.utils.StringUtils;
 import com.library.android.common.utils.Utils;
 import com.livemymail.android.mailboxapp.activities.MainActivity;
+import com.squareup.okhttp.ResponseBody;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import retrofit2.Call;
+import retrofit2.Callback;
+
+import static android.widget.Toast.LENGTH_SHORT;
+import static android.widget.Toast.makeText;
 
 public class OutlookDetailActivity extends BaseActivity {
 
     private ActivityOutlookDetailBinding mBinding;
+    private OutlookMessage mOutlookMessage;
+    private String mAccessToken = "";
+    private int mPosition;
+
+    public int getPosition() {
+        return mPosition;
+    }
+
+    public void setPosition(int mPosition) {
+        this.mPosition = mPosition;
+    }
 
     @Override
     public int getLayoutId() {
@@ -46,11 +70,19 @@ public class OutlookDetailActivity extends BaseActivity {
 
     @Override
     public void handleViews() {
+        setSupportActionBar(mBinding.toolbar);
         setWebView();
+        if (Utils.hasKeyValue(getIntent(), JsonKeys.ACCESS_TOKEN)) {
+            setAccessToken(Utils.getKeyValue(getIntent(), JsonKeys.ACCESS_TOKEN, ""));
+        }
+        if (Utils.hasPosition(getIntent())) {
+            setPosition(Utils.getPosition(getIntent(), -1));
+        }
         if (Utils.hasParcel(getIntent())) {
             if (Utils.getParcel(getIntent()) instanceof OutlookMessage) {
                 OutlookMessage outlookMessage = (OutlookMessage) Utils.getParcel(getIntent());
                 if (outlookMessage != null) {
+                    setOutlookMessage(outlookMessage);
                     if (outlookMessage.getBody() != null && StringUtils.isNotNullNotEmpty(outlookMessage.getBody().getContent())) {
                         /* mWebView.loadData(myHtmlString, "text/html", null);*/
                         mBinding.webView.loadData(outlookMessage.getBody().getContent(), "text/html", "UTF-8");
@@ -136,5 +168,65 @@ public class OutlookDetailActivity extends BaseActivity {
     @Override
     public void restoreValues(Bundle savedInstanceState) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.outlook_detail, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.delete) {
+            deleteEmail();
+            return true;
+        } else if (id == R.id.reply) {
+            replyEmail();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void deleteEmail() {
+        if (getOutlookMessage() != null && StringUtils.isNotNullNotEmpty(getAccessToken(), getOutlookMessage().getId())) {
+            ApiInterface apiService =
+                    ApiClient.getClient().create(ApiInterface.class);
+            Call<ResponseBody> call = apiService.deleteOutlookEmail("Bearer " + getAccessToken(), getOutlookMessage().getId());
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull retrofit2.Response<ResponseBody> response) {
+                    Intent intent = Utils.setApi(getIntent(), AppUrls.OutlookUrls.DELETE_EMAIL);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                    makeText(OutlookDetailActivity.this, "something went wrong! Please try again...", LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void replyEmail() {
+
+    }
+
+    public OutlookMessage getOutlookMessage() {
+        return mOutlookMessage;
+    }
+
+    public String getAccessToken() {
+        return mAccessToken;
+    }
+
+    public void setAccessToken(String mAccessToken) {
+        this.mAccessToken = mAccessToken;
+    }
+
+    public void setOutlookMessage(OutlookMessage mOutlookMessage) {
+        this.mOutlookMessage = mOutlookMessage;
     }
 }

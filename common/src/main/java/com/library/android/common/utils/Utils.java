@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Parcelable;
 import android.util.Log;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -14,6 +16,7 @@ import com.library.android.common.baseconstants.BaseKeys;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public final class Utils {
@@ -48,10 +51,6 @@ public final class Utils {
         return dataList;
     }
 
-    public static boolean isNotNullNotEmpty(List list) {
-        return list != null && list.size() > 0;
-    }
-
     public static Intent setParcel(Intent intent, Object parcelableObject) {
         if (intent == null) {
             intent = new Intent();
@@ -65,6 +64,38 @@ public final class Utils {
             return intent.getParcelableExtra(BaseKeys.PARCEL);
         }
         return null;
+    }
+
+    public static String getKeyValue(Intent intent, String key, String defaultValue) {
+        return Utils.hasKeyValue(intent, key) ? intent.getStringExtra(key) : defaultValue;
+    }
+
+    public static boolean hasKeyValue(Intent intent, String key) {
+        return intent != null && intent.hasExtra(key);
+    }
+
+    public static Intent setApi(Intent intent, String apiValue) {
+        if (intent == null) {
+            intent = new Intent();
+        }
+        intent.putExtra(BaseKeys.API, apiValue);
+        return intent;
+    }
+
+    public static String getApi(Intent intent, String defaultValue) {
+        return Utils.hasApi(intent) ? intent.getStringExtra(BaseKeys.API) : defaultValue;
+    }
+
+    public static boolean hasApi(Intent intent) {
+        return intent != null && intent.hasExtra(BaseKeys.API);
+    }
+
+    public static int getPosition(Intent intent, int defaultValue) {
+        return Utils.hasPosition(intent) ? intent.getIntExtra(BaseKeys.POSITION, defaultValue) : defaultValue;
+    }
+
+    public static boolean hasPosition(Intent intent) {
+        return intent != null && intent.hasExtra(BaseKeys.POSITION);
     }
 
     public static boolean hasParcel(Intent intent) {
@@ -105,5 +136,17 @@ public final class Utils {
         String javaObjectString = jsonObject.toString();
         Log.d(TAG, "getJsonObject: ");
         return jsonObject;
+    }
+
+    public static <T> List<T> getFilteredList(List<T> list, Predicate<T> predicate) {
+        if (Utils.isNotNullNotEmpty(list)) {
+            Collection<T> filter = Collections2.filter(list, predicate);
+            return new ArrayList<>(filter);
+        }
+        return list;
+    }
+
+    public static boolean isNotNullNotEmpty(List list) {
+        return list != null && list.size() > 0;
     }
 }

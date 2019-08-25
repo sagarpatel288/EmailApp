@@ -75,6 +75,7 @@ void utils(configs) {
     configs.annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.ext.glide"
 
     configs.api "com.google.code.gson:gson:$rootProject.ext.gson"
+    configs.api 'com.google.guava:guava:28.0-android'
     configs.api "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit"
     configs.api "com.squareup.retrofit2:converter-gson:$rootProject.ext.retrofit"
     configs.api "com.jakewharton.threetenabp:threetenabp:$rootProject.ext.threetenabp"

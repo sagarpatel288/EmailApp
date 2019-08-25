@@ -59,6 +59,10 @@ public class SharedPrefs {
         return mEditor;
     }
 
+    public static void savePrefs(Context context, String key, String value) {
+        SharedPrefs.getEditor(context).putString(key, value).apply();
+    }
+
     /**
      * Gives SharedPreferences with secure singleton pattern
      * <p>
