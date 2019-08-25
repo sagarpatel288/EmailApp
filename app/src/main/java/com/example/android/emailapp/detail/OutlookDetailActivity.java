@@ -19,6 +19,7 @@ import android.webkit.WebViewClient;
 
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.baseui.BaseActivity;
+import com.example.android.emailapp.compose.ComposeActivity;
 import com.example.android.emailapp.constants.AppUrls;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityOutlookDetailBinding;
@@ -43,7 +44,7 @@ public class OutlookDetailActivity extends BaseActivity {
     private ActivityOutlookDetailBinding mBinding;
     private OutlookMessage mOutlookMessage;
     private String mAccessToken = "";
-    private int mPosition;
+    private int mPosition = -1;
 
     public int getPosition() {
         return mPosition;
@@ -211,7 +212,7 @@ public class OutlookDetailActivity extends BaseActivity {
     }
 
     private void replyEmail() {
-
+        startActivity(getBaseIntent(getOutlookMessage(), JsonKeys.ACCESS_TOKEN, getAccessToken(), getPosition(), ComposeActivity.class));
     }
 
     public OutlookMessage getOutlookMessage() {

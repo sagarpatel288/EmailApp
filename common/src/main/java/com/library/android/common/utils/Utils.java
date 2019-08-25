@@ -90,6 +90,14 @@ public final class Utils {
         return intent != null && intent.hasExtra(BaseKeys.API);
     }
 
+    public static String getSourceScreen(Intent intent, String defaultValue) {
+        return Utils.hasSourceScreen(intent) ? intent.getStringExtra(BaseKeys.SOURCE_SCREEN) : defaultValue;
+    }
+
+    public static boolean hasSourceScreen(Intent intent) {
+        return intent != null && intent.hasExtra(BaseKeys.SOURCE_SCREEN);
+    }
+
     public static int getPosition(Intent intent, int defaultValue) {
         return Utils.hasPosition(intent) ? intent.getIntExtra(BaseKeys.POSITION, defaultValue) : defaultValue;
     }

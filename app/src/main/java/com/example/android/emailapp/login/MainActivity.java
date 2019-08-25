@@ -14,7 +14,6 @@ import com.example.android.emailapp.R;
 import com.example.android.emailapp.baseui.BaseActivity;
 import com.example.android.emailapp.compose.ComposeActivity;
 import com.example.android.emailapp.constants.AppApi;
-import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.AppUrls;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
@@ -223,7 +222,7 @@ public class MainActivity extends BaseActivity {
 
     private void onClickCompose() {
         if (authResult != null && StringUtils.isNotNullNotEmpty(authResult.getAccessToken())) {
-            startActivity(getBaseIntent(AppKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
+            startActivity(getBaseIntent(JsonKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
         } else {
             makeText(this, "Please verify first", LENGTH_SHORT).show();
         }

@@ -10,6 +10,7 @@ import android.widget.ProgressBar;
 import com.example.android.emailapp.R;
 import com.library.android.common.baseconstants.BaseKeys;
 import com.library.android.common.databinding.BaseViewStubLayoutBinding;
+import com.library.android.common.utils.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -112,7 +113,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (mIntent == null) {
             mIntent = new Intent();
         }
-        mIntent.putExtra(BaseKeys.SCREEN, getClass().getSimpleName());
+        mIntent.putExtra(BaseKeys.SOURCE_SCREEN, getClass().getSimpleName());
+        return mIntent;
+    }
+
+    public Intent getBaseIntent(Object parcelableObject, String key, String value, int position, Class targetClass) {
+        mIntent = getBaseIntent(parcelableObject, position, targetClass);
+        mIntent.putExtra(key, value);
+        return mIntent;
+    }
+
+    public Intent getBaseIntent(Object parcelableObject, int position, Class targetClass) {
+        mIntent = getBaseIntent(parcelableObject, targetClass);
+        mIntent.putExtra(BaseKeys.POSITION, position);
         return mIntent;
     }
 
@@ -123,15 +136,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         return mIntent;
     }
 
-    public Intent getBaseIntent(Object parcelableObject, int position, Class targetClass) {
-        mIntent = getBaseIntent(parcelableObject, targetClass);
-        mIntent.putExtra(BaseKeys.POSITION, position);
-        return mIntent;
-    }
-
-    public Intent getBaseIntent(Object parcelableObject, String key, String value, int position, Class targetClass) {
-        mIntent = getBaseIntent(parcelableObject, position, targetClass);
-        mIntent.putExtra(key, value);
-        return mIntent;
+    public String getSourceScreen() {
+        if (Utils.hasSourceScreen(getIntent())) {
+            return Utils.getSourceScreen(getIntent(), "");
+        }
+        return "";
     }
 }

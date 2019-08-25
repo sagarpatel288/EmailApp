@@ -10,9 +10,9 @@ import android.widget.Toast;
 
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.baseui.BaseActivity;
-import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityComposeBinding;
+import com.example.android.emailapp.detail.OutlookDetailActivity;
 import com.example.android.emailapp.pojos.Body;
 import com.example.android.emailapp.pojos.OutlookEmailAddress;
 import com.example.android.emailapp.pojos.OutlookMessage;
@@ -36,7 +36,7 @@ public class ComposeActivity extends BaseActivity {
 
     private static final String TAG = ComposeActivity.class.getSimpleName();
     private ActivityComposeBinding mBinding;
-    private OutlookMessage mMessage;
+    private OutlookMessage mOutlookMessage;
     private String accessToken = "";
 
     @Override
@@ -51,14 +51,33 @@ public class ComposeActivity extends BaseActivity {
 
     @Override
     public void initControllers() {
-        if (getIntent() != null && getIntent().hasExtra(AppKeys.ACCESS_TOKEN)) {
-            accessToken = getIntent().getStringExtra(AppKeys.ACCESS_TOKEN);
+        if (getIntent() != null && getIntent().hasExtra(JsonKeys.ACCESS_TOKEN)) {
+            accessToken = getIntent().getStringExtra(JsonKeys.ACCESS_TOKEN);
         }
     }
 
     @Override
     public void handleViews() {
+        if (OutlookDetailActivity.class.getSimpleName().equalsIgnoreCase(getSourceScreen())) {
+            if (Utils.hasParcel(getIntent()) && Utils.getParcel(getIntent()) instanceof OutlookMessage) {
+                setOutlookMessage((OutlookMessage) Utils.getParcel(getIntent()));
+                if (getOutlookMessage() != null) {
+                    if (getOutlookMessage().getSender() != null
+                            && getOutlookMessage().getSender().getEmailAddress() != null
+                            && getOutlookMessage().getSender().getEmailAddress().getAddress() != null) {
+                        mBinding.etToRecepient.setText(getOutlookMessage().getSender().getEmailAddress().getAddress());
+                    }
+                }
+            }
+        }
+    }
 
+    public OutlookMessage getOutlookMessage() {
+        return mOutlookMessage;
+    }
+
+    public void setOutlookMessage(OutlookMessage mMessage) {
+        this.mOutlookMessage = mMessage;
     }
 
     @Override
@@ -149,11 +168,11 @@ public class ComposeActivity extends BaseActivity {
     }
 
     public OutlookMessage getMessage() {
-        return mMessage;
+        return mOutlookMessage;
     }
 
     public void setMessage(OutlookMessage mMessage) {
-        this.mMessage = mMessage;
+        this.mOutlookMessage = mMessage;
     }
 
     @Override

@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.baseui.BaseActivity;
 import com.example.android.emailapp.compose.ComposeActivity;
-import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.JsonKeys;
 import com.example.android.emailapp.databinding.ActivityMainBinding;
 import com.example.android.emailapp.pojos.OutlookAccess;
@@ -238,7 +237,7 @@ public class InboxActivity extends BaseActivity {
 
     private void onClickCompose() {
         if (authResult != null && StringUtils.isNotNullNotEmpty(authResult.getAccessToken())) {
-            startActivity(getBaseIntent(AppKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
+            startActivity(getBaseIntent(JsonKeys.ACCESS_TOKEN, authResult.getAccessToken(), ComposeActivity.class));
         } else {
             Toast.makeText(this, "Please verify first", Toast.LENGTH_SHORT).show();
         }
