@@ -15,6 +15,7 @@ import com.library.android.common.adapters.BaseAdapter;
 import com.library.android.common.baseconstants.BaseConstants;
 import com.library.android.common.baseviewholders.ProgressLoadingHolder;
 import com.library.android.common.listeners.Callbacks;
+import com.library.android.common.utils.StringUtils;
 import com.library.android.common.utils.Utils;
 import com.library.android.common.utils.ViewUtils;
 
@@ -35,7 +36,7 @@ import androidx.recyclerview.widget.RecyclerView;
  * @see
  * @since $
  */
-public class RvOutlookEmailAdapter extends BaseAdapter {
+public class RvOutlookEmailAdapter extends BaseAdapter  {
 
     public static final String TAG = RvOutlookEmailAdapter.class.getSimpleName();
     // This object helps you save/restore the open/close state of each view
@@ -77,6 +78,22 @@ public class RvOutlookEmailAdapter extends BaseAdapter {
             itemViewHolder.mBinding.txtDate.setText(DateUtils.getRelativeDateTimeString(
                     getContext(), receivedDateTime.toEpochMilli(), DateUtils.SECOND_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE));
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List getFilteredList(String query) {
+        if (StringUtils.isNullOrEmpty(query)) {
+            return getOriginalList();
+        }
+        List<OutlookMessage> originalList = getOriginalList();
+        if (Utils.isNotNullNotEmpty(originalList)) {
+            return Utils.getFilteredList(originalList, input -> input != null
+                    && input.getSender() != null
+                    && input.getSender().getEmailAddress() != null
+                    && StringUtils.contains(input.getSender().getEmailAddress().getAddress(), query));
+        }
+        return getOriginalList();
     }
 
     public class ItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

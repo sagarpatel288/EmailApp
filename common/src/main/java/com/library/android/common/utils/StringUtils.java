@@ -19,11 +19,16 @@ public final class StringUtils {
         return s != null && !s.isEmpty() && !s.equalsIgnoreCase("null");
     }
 
-    public static boolean isNullOrEmpty(String s) {
-        return s == null || s.isEmpty() || s.equalsIgnoreCase("null");
+    public static boolean contains(String container, String query) {
+        return (StringUtils.isNotNullNotEmpty(container, query) && container.trim().toLowerCase().contains(query.trim().toLowerCase()))
+                || query.isEmpty();
     }
 
     public static boolean isNotNullNotEmpty(String... strings) {
         return strings != null && strings.length > 0 && Utils.getFilteredList(Arrays.asList(strings), StringUtils::isNullOrEmpty).size() == 0;
+    }
+
+    public static boolean isNullOrEmpty(String s) {
+        return s == null || s.isEmpty() || s.equalsIgnoreCase("null");
     }
 }

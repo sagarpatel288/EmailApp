@@ -2,6 +2,8 @@ package com.library.android.common.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.widget.Filter;
+import android.widget.Filterable;
 
 import com.library.android.common.baseconstants.BaseConstants;
 import com.library.android.common.listeners.Callbacks;
@@ -22,43 +24,55 @@ import androidx.recyclerview.widget.RecyclerView;
  * @see
  * @since 1.0$
  */
-public abstract class BaseAdapter extends RecyclerView.Adapter {
+public abstract class BaseAdapter extends RecyclerView.Adapter implements Filterable {
 
     private Context mContext;
-    private List mList;
+    private List mFilteredList;
+    private List mOriginalList;
     private Callbacks.EventCallBack mEventCallBack;
     private Intent mIntent;
     private int mPaginationLimit = -1;
 
-    public BaseAdapter(Context mContext, List mList, int mPaginationLimit, Callbacks.EventCallBack mEventCallBack) {
+    public BaseAdapter(Context mContext, List mFilteredList, int mPaginationLimit, Callbacks.EventCallBack mEventCallBack) {
         this.mContext = mContext;
-        this.mList = mList;
+        this.mFilteredList = mFilteredList;
         this.mPaginationLimit = mPaginationLimit;
         this.mEventCallBack = mEventCallBack;
         setContext(mContext);
-        setList(mList);
+        setList(mFilteredList);
+        setOriginalList(mFilteredList);
         setPaginationLimit(mPaginationLimit);
         setEventCallBack(mEventCallBack);
     }
 
-    public BaseAdapter(Context mContext, List mList, Callbacks.EventCallBack mEventCallBack, Intent mIntent) {
+    public BaseAdapter(Context mContext, List mFilteredList, Callbacks.EventCallBack mEventCallBack, Intent mIntent) {
         this.mContext = mContext;
-        this.mList = mList;
+        this.mFilteredList = mFilteredList;
         this.mEventCallBack = mEventCallBack;
         this.mIntent = mIntent;
         setContext(mContext);
-        setList(mList);
+        setList(mFilteredList);
+        setOriginalList(mFilteredList);
         setEventCallBack(mEventCallBack);
         setAdapterIntent(mIntent);
     }
 
-    public BaseAdapter(Context mContext, List mList, Callbacks.EventCallBack mEventCallBack) {
+    public BaseAdapter(Context mContext, List mFilteredList, Callbacks.EventCallBack mEventCallBack) {
         this.mContext = mContext;
-        this.mList = mList;
+        this.mFilteredList = mFilteredList;
         this.mEventCallBack = mEventCallBack;
         setContext(mContext);
-        setList(mList);
+        setList(mFilteredList);
+        setOriginalList(mFilteredList);
         setEventCallBack(mEventCallBack);
+    }
+
+    public List getOriginalList() {
+        return mOriginalList;
+    }
+
+    public void setOriginalList(List mOriginalList) {
+        this.mOriginalList = mOriginalList;
     }
 
     public int getPaginationLimit() {
@@ -107,11 +121,11 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
     }
 
     public List getList() {
-        return mList;
+        return mFilteredList;
     }
 
-    public void setList(List mList) {
-        this.mList = mList;
+    public void setList(List mFilteredList) {
+        this.mFilteredList = mFilteredList;
     }
 
     @Override
@@ -120,22 +134,23 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
     }
 
     @SuppressWarnings("unchecked")
-    public void addItems(List mList, boolean adjustLoadMore, int paginationLimit) {
-        addList(mList, adjustLoadMore, paginationLimit);
+    public void addItems(List mFilteredList, boolean adjustLoadMore, int paginationLimit) {
+        addList(mFilteredList, adjustLoadMore, paginationLimit);
     }
 
     @SuppressWarnings("unchecked")
-    public void addList(List mList, boolean adjustLoadMore, int paginationLimit) {
+    public void addList(List mFilteredList, boolean adjustLoadMore, int paginationLimit) {
         removeLoadMore();
-        if (mList == null) {
-            mList = new ArrayList();
+        if (mFilteredList == null) {
+            mFilteredList = new ArrayList();
         }
-        this.mList.addAll(mList);
-        if (adjustLoadMore && Utils.hasMore(mList, paginationLimit)) {
-            this.mList.add(null);
+        this.mFilteredList.addAll(mFilteredList);
+        setOriginalList(this.mFilteredList);
+        if (adjustLoadMore && Utils.hasMore(mFilteredList, paginationLimit)) {
+            this.mFilteredList.add(null);
         }
-        notifyItemInserted(mList.size());
-        notifyItemRangeChanged(mList.size(), getItemCount());
+        notifyItemInserted(mFilteredList.size());
+        notifyItemRangeChanged(mFilteredList.size(), getItemCount());
     }
 
     public void removeLoadMore() {
@@ -151,13 +166,13 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void removeLoadMore(List mList) {
-        if (Utils.isNotNullNotEmpty(mList)) {
-//            mList.removeAll(Collections.singletonList(null));
+    public void removeLoadMore(List mFilteredList) {
+        if (Utils.isNotNullNotEmpty(mFilteredList)) {
+//            mFilteredList.removeAll(Collections.singletonList(null));
 //            notifyDataSetChanged();
-            int lastIndex = mList.size() - 1;
-            if (mList.get(lastIndex) == null) {
-                mList.remove(lastIndex);
+            int lastIndex = mFilteredList.size() - 1;
+            if (mFilteredList.get(lastIndex) == null) {
+                mFilteredList.remove(lastIndex);
                 notifyItemRemoved(lastIndex);
                 notifyItemRangeChanged(lastIndex, getItemCount());
             }
@@ -172,4 +187,26 @@ public abstract class BaseAdapter extends RecyclerView.Adapter {
         }
     }
 
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                FilterResults filterResults = new FilterResults();
+                mFilteredList = getFilteredList(charString);
+                filterResults.values = mFilteredList;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                mFilteredList = (List) filterResults.values;
+                // refresh the list with filtered data
+                notifyDataSetChanged();
+            }
+        };
+    }
+
+    public abstract List getFilteredList(String query);
 }
