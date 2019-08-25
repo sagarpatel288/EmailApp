@@ -149,4 +149,15 @@ public final class Utils {
     public static boolean isNotNullNotEmpty(List list) {
         return list != null && list.size() > 0;
     }
+
+    public static boolean hasElement(List list, int position) {
+        return Utils.isNotNullNotEmpty(list) && position != -1 && list.size() > position;
+    }
+
+    public static boolean hasMore(List mList, int paginationLimit) {
+        if (Utils.isNotNullNotEmpty(mList) && paginationLimit != -1) {
+            return mList.size() >= paginationLimit;
+        }
+        return false;
+    }
 }

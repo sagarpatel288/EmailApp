@@ -18,6 +18,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 public interface ApiInterface {
 
@@ -32,6 +33,10 @@ public interface ApiInterface {
     /*headers.put("Authorization", "Bearer " + authResult.getAccessToken());*/
     @GET(AppApi.MS_OUTLOOK_GRAPH_API)
     Call<OutlookResponse> getAllMessages(@Header("Authorization") String bearerPlusToken);
+
+    /*headers.put("Authorization", "Bearer " + authResult.getAccessToken());*/
+    @GET
+    Call<OutlookResponse> getMessages(@Url String incrementalUrl, @Header("Authorization") String bearerPlusToken);
 
     @FormUrlEncoded
     @POST("/your_endpoint")

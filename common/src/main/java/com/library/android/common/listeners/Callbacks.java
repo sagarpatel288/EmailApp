@@ -16,7 +16,7 @@ public abstract class Callbacks {
         void eventCallBack(Intent intent);
     }
 
-    public interface AddEventCallBack {
+    public interface EventCallBack {
         void onEventCallBack(View view, int clickedPosition, Intent intent);
     }
 

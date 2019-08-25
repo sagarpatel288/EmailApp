@@ -18,28 +18,23 @@ import java.util.List;
  * @since $
  */
 public class OutlookResponse implements Parcelable {
-    public static final Parcelable.Creator<OutlookResponse> CREATOR = new Parcelable.Creator<OutlookResponse>() {
-        @Override
-        public OutlookResponse createFromParcel(Parcel source) {
-            return new OutlookResponse(source);
-        }
-
-        @Override
-        public OutlookResponse[] newArray(int size) {
-            return new OutlookResponse[size];
-        }
-    };
     @SerializedName("@odata.context")
     private String oDataContext;
+
+    public String getoDataNextLink() {
+        return oDataNextLink;
+    }
+
+    public void setoDataNextLink(String oDataNextLink) {
+        this.oDataNextLink = oDataNextLink;
+    }
+
+    @SerializedName("@odata.nextLink")
+    private String oDataNextLink;
     @SerializedName("value")
     private List<OutlookMessage> values;
 
     public OutlookResponse() {
-    }
-
-    protected OutlookResponse(Parcel in) {
-        this.oDataContext = in.readString();
-        this.values = in.createTypedArrayList(OutlookMessage.CREATOR);
     }
 
     public String getoDataContext() {
@@ -66,6 +61,25 @@ public class OutlookResponse implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.oDataContext);
+        dest.writeString(this.oDataNextLink);
         dest.writeTypedList(this.values);
     }
+
+    protected OutlookResponse(Parcel in) {
+        this.oDataContext = in.readString();
+        this.oDataNextLink = in.readString();
+        this.values = in.createTypedArrayList(OutlookMessage.CREATOR);
+    }
+
+    public static final Creator<OutlookResponse> CREATOR = new Creator<OutlookResponse>() {
+        @Override
+        public OutlookResponse createFromParcel(Parcel source) {
+            return new OutlookResponse(source);
+        }
+
+        @Override
+        public OutlookResponse[] newArray(int size) {
+            return new OutlookResponse[size];
+        }
+    };
 }

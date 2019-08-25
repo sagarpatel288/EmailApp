@@ -176,7 +176,7 @@ public class InboxActivity extends BaseActivity {
 
     private void onGetOutLookEmailList(List<OutlookMessage> emails) {
         if (mRvOutlookEmailAdapter != null) {
-            mRvOutlookEmailAdapter.addItems(emails);
+            mRvOutlookEmailAdapter.addItems(emails, true, 10);
         }
     }
 

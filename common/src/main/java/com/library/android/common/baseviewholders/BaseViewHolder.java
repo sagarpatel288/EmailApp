@@ -16,9 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
  * <p>
  * BaseViewHolder to be used in RecyclerView.Adapter$
  * <p>
- * Being used in {@link $}
+ * Being used in {@link }
  *
- * @see $
+ * @see
  * @since 1.0$
  */
 public abstract class BaseViewHolder extends RecyclerView.ViewHolder {

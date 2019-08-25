@@ -11,6 +11,7 @@ import android.webkit.WebViewClient;
 import com.example.android.emailapp.R;
 import com.example.android.emailapp.baseui.BaseActivity;
 import com.example.android.emailapp.compose.ComposeActivity;
+import com.example.android.emailapp.constants.AppApi;
 import com.example.android.emailapp.constants.AppKeys;
 import com.example.android.emailapp.constants.AppUrls;
 import com.example.android.emailapp.constants.JsonKeys;
@@ -22,6 +23,7 @@ import com.example.android.emailapp.pojos.OutlookMessage;
 import com.example.android.emailapp.pojos.OutlookResponse;
 import com.example.android.emailapp.rest.ApiClient;
 import com.example.android.emailapp.rest.ApiInterface;
+import com.library.android.common.listeners.EndlessRecyclerViewScrollListener;
 import com.library.android.common.utils.StringUtils;
 import com.library.android.common.utils.Utils;
 import com.microsoft.identity.client.AuthenticationCallback;
@@ -36,6 +38,7 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -66,6 +69,9 @@ public class MainActivity extends BaseActivity {
     private ActivityMainBinding mBinding;
     private String mAccessCode = "";
     private RvOutlookEmailAdapter mRvOutlookEmailAdapter;
+    private LinearLayoutManager mRvLinearLayoutManager;
+    private String mOutlookIncrementalUrl = AppApi.MS_OUTLOOK_GRAPH_API;
+    private boolean hasMoreData = true;
 
     @Override
     public int getLayoutId() {
@@ -84,16 +90,37 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void handleViews() {
+        setToolbar();
         setRecyclerView();
+        setLoadMore();
+    }
+
+    private void setToolbar() {
+        setSupportActionBar(mBinding.includeToolbar.toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle(getString(R.string.inbox));
+        }
     }
 
     private void setRecyclerView() {
         mBinding.rvEmail.setVisibility(View.VISIBLE);
         mBinding.rvEmail.setNestedScrollingEnabled(false);
         mRvOutlookEmailAdapter = new RvOutlookEmailAdapter(this, new ArrayList<>(), this::onClickEmail);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        mBinding.rvEmail.setLayoutManager(linearLayoutManager);
+        mRvLinearLayoutManager = new LinearLayoutManager(this);
+        mBinding.rvEmail.setLayoutManager(mRvLinearLayoutManager);
         mBinding.rvEmail.setAdapter(mRvOutlookEmailAdapter);
+    }
+
+    private void setLoadMore() {
+        EndlessRecyclerViewScrollListener loadMore = new EndlessRecyclerViewScrollListener(mRvLinearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                if (hasMoreData) {
+                    callGraphAPI();
+                }
+            }
+        };
+        mBinding.rvEmail.addOnScrollListener(loadMore);
     }
 
     private void onClickEmail(View view, int clickedPosition, Intent intent) {
@@ -111,6 +138,33 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    private void callGraphAPI() {
+        /* Make sure we have a token to send to graph */
+       /* if (authResult.getAccessToken() == null) {
+            return;
+        }*/
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        /*headers.put("Authorization", "Bearer " + authResult.getAccessToken());*/
+        Log.d(TAG, "callGraphAPI: accessToken: " + authResult.getAccessToken());
+        Call<OutlookResponse> call = apiService.getMessages(mOutlookIncrementalUrl, "Bearer " + authResult.getAccessToken());
+        call.enqueue(new Callback<OutlookResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<OutlookResponse> call, @NonNull retrofit2.Response<OutlookResponse> response) {
+                if (response.body() != null) {
+                    OutlookResponse outlookResponse = response.body();
+                    onGetOutlookResponse(outlookResponse);
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<OutlookResponse> call, @NonNull Throwable t) {
+                // Log error here since request failed
+                Log.e(TAG, t.toString());
+            }
+        });
     }
 
     private void deleteEmail(int clickedPosition, OutlookMessage clickedEmail) {
@@ -133,9 +187,24 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    public void onGetOutlookResponse(OutlookResponse outlookResponse) {
+        hasMoreData = StringUtils.isNotNullNotEmpty(outlookResponse.getoDataNextLink());
+        if (hasMoreData) {
+            mOutlookIncrementalUrl = outlookResponse.getoDataNextLink();
+        }
+        List<OutlookMessage> emails = outlookResponse.getValues();
+        onGetOutLookEmailList(emails);
+    }
+
     public void deleteEmail(int position) {
         if (mRvOutlookEmailAdapter != null) {
             mRvOutlookEmailAdapter.removeItem(position);
+        }
+    }
+
+    private void onGetOutLookEmailList(List<OutlookMessage> emails) {
+        if (mRvOutlookEmailAdapter != null) {
+            mRvOutlookEmailAdapter.addItems(emails, true, 10);
         }
     }
 
@@ -218,33 +287,6 @@ public class MainActivity extends BaseActivity {
                 Log.d(TAG, "User cancelled login.");
             }
         };
-    }
-
-    private void callGraphAPI() {
-        /* Make sure we have a token to send to graph */
-       /* if (authResult.getAccessToken() == null) {
-            return;
-        }*/
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        /*headers.put("Authorization", "Bearer " + authResult.getAccessToken());*/
-        Log.d(TAG, "callGraphAPI: accessToken: " + authResult.getAccessToken());
-        Call<OutlookResponse> call = apiService.getAllMessages("Bearer " + authResult.getAccessToken());
-        call.enqueue(new Callback<OutlookResponse>() {
-            @Override
-            public void onResponse(@NonNull Call<OutlookResponse> call, @NonNull retrofit2.Response<OutlookResponse> response) {
-                if (response.body() != null) {
-                    List<OutlookMessage> emails = response.body().getValues();
-                    onGetOutLookEmailList(emails);
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<OutlookResponse> call, @NonNull Throwable t) {
-                // Log error here since request failed
-                Log.e(TAG, t.toString());
-            }
-        });
     }
 
     private void updateSuccessUI() {
@@ -384,13 +426,14 @@ Mail.Send*/
     private void onGetOutLookAccess(OutlookAccess outlookAccess) {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<OutlookResponse> call = apiService.getAllMessages("Bearer " + outlookAccess.getAccessToken());
+        Call<OutlookResponse> call = apiService.getMessages(mOutlookIncrementalUrl, "Bearer " + outlookAccess.getAccessToken());
+        Log.d(TAG, "onGetOutLookAccess: calling api: getMessages");
         call.enqueue(new Callback<OutlookResponse>() {
             @Override
             public void onResponse(@NonNull Call<OutlookResponse> call, @NonNull retrofit2.Response<OutlookResponse> response) {
                 if (response.body() != null) {
-                    List<OutlookMessage> emails = response.body().getValues();
-                    onGetOutLookEmailList(emails);
+                    OutlookResponse outlookResponse = response.body();
+                    onGetOutlookResponse(outlookResponse);
                 }
             }
 
@@ -400,12 +443,6 @@ Mail.Send*/
                 Log.e(TAG, t.toString());
             }
         });
-    }
-
-    private void onGetOutLookEmailList(List<OutlookMessage> emails) {
-        if (mRvOutlookEmailAdapter != null) {
-            mRvOutlookEmailAdapter.addItems(emails);
-        }
     }
 
     @Override
